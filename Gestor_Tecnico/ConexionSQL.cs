@@ -30,24 +30,8 @@ namespace Gestor_Tecnico
             }
         }
 
-        public bool ProbarConexion()
-        {
-            try
-            {
-                using (SqlConnection conexion = new SqlConnection(cadenaConexion))
-                {
-                    conexion.Open();
-                    MessageBox.Show("¡Conexión exitosa!", "Éxito",
-                                   MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al conectar:\n{ex.Message}", "Error de Conexión",
-                               MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-        }
+        // NO ESCRIBIR NINGUNA CONSULTA AQUI
+
+        // NO ESCRIBIR NADA DE CODIGO EN ESTA CLASE
     }
 }
