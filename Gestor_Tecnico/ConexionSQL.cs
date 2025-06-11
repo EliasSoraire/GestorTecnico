@@ -30,7 +30,6 @@ namespace Gestor_Tecnico
             }
         }
 
-        // Método específico para probar la conexión
         public bool ProbarConexion()
         {
             try
@@ -48,27 +47,6 @@ namespace Gestor_Tecnico
                 MessageBox.Show($"Error al conectar:\n{ex.Message}", "Error de Conexión",
                                MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
-            }
-        }
-
-        // Método para obtener información del servidor
-        public string ObtenerInfoServidor()
-        {
-            try
-            {
-                using (SqlConnection conexion = new SqlConnection(cadenaConexion))
-                {
-                    conexion.Open();
-                    string info = $"Servidor: {conexion.DataSource}\n";
-                    info += $"Base de Datos: {conexion.Database}\n";
-                    info += $"Versión: {conexion.ServerVersion}\n";
-                    info += $"Estado: {conexion.State}";
-                    return info;
-                }
-            }
-            catch (Exception ex)
-            {
-                return $"Error: {ex.Message}";
             }
         }
     }
