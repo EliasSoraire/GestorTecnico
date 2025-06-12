@@ -64,7 +64,7 @@
             label1.ForeColor = SystemColors.ButtonHighlight;
             label1.Location = new Point(0, 0);
             label1.Name = "label1";
-            label1.Size = new Size(831, 50);
+            label1.Size = new Size(950, 50);
             label1.TabIndex = 1;
             label1.Text = "Gestion de Clientes";
             label1.TextAlign = ContentAlignment.MiddleCenter;
@@ -72,11 +72,12 @@
             // btnLimpiar
             // 
             btnLimpiar.BackColor = Color.FromArgb(90, 76, 105);
-            btnLimpiar.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnLimpiar.FlatStyle = FlatStyle.Popup;
+            btnLimpiar.Font = new Font("Segoe UI Black", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnLimpiar.ForeColor = SystemColors.ButtonHighlight;
-            btnLimpiar.Location = new Point(158, 460);
+            btnLimpiar.Location = new Point(181, 490);
             btnLimpiar.Name = "btnLimpiar";
-            btnLimpiar.Size = new Size(122, 30);
+            btnLimpiar.Size = new Size(139, 30);
             btnLimpiar.TabIndex = 35;
             btnLimpiar.Text = "Limpiar";
             btnLimpiar.UseVisualStyleBackColor = false;
@@ -84,135 +85,142 @@
             // btnGuardarCliente
             // 
             btnGuardarCliente.BackColor = Color.FromArgb(123, 104, 144);
-            btnGuardarCliente.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnGuardarCliente.FlatStyle = FlatStyle.Popup;
+            btnGuardarCliente.Font = new Font("Segoe UI Black", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGuardarCliente.ForeColor = SystemColors.ButtonHighlight;
-            btnGuardarCliente.Location = new Point(18, 460);
+            btnGuardarCliente.Location = new Point(21, 490);
             btnGuardarCliente.Name = "btnGuardarCliente";
-            btnGuardarCliente.Size = new Size(122, 30);
+            btnGuardarCliente.Size = new Size(139, 30);
             btnGuardarCliente.TabIndex = 34;
-            btnGuardarCliente.Text = "Guardar Cliente";
+            btnGuardarCliente.Text = "Guardar";
             btnGuardarCliente.UseVisualStyleBackColor = false;
             // 
             // txtEmail
             // 
-            txtEmail.ForeColor = Color.Gray;
-            txtEmail.Location = new Point(18, 420);
+            txtEmail.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold);
+            txtEmail.ForeColor = Color.Black;
+            txtEmail.Location = new Point(23, 450);
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(263, 25);
+            txtEmail.Size = new Size(300, 27);
             txtEmail.TabIndex = 33;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label7.ForeColor = Color.FromArgb(90, 76, 105);
-            label7.Location = new Point(18, 400);
+            label7.Location = new Point(21, 425);
             label7.Name = "label7";
-            label7.Size = new Size(92, 15);
+            label7.Size = new Size(116, 20);
             label7.TabIndex = 32;
             label7.Text = "Direccion Email";
             // 
             // txtDomicilio
             // 
-            txtDomicilio.ForeColor = Color.Gray;
-            txtDomicilio.Location = new Point(18, 360);
+            txtDomicilio.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold);
+            txtDomicilio.ForeColor = Color.Black;
+            txtDomicilio.Location = new Point(23, 385);
             txtDomicilio.Name = "txtDomicilio";
-            txtDomicilio.Size = new Size(263, 25);
+            txtDomicilio.Size = new Size(300, 27);
             txtDomicilio.TabIndex = 31;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label6.ForeColor = Color.FromArgb(90, 76, 105);
-            label6.Location = new Point(18, 340);
+            label6.Location = new Point(21, 360);
             label6.Name = "label6";
-            label6.Size = new Size(59, 15);
+            label6.Size = new Size(75, 20);
             label6.TabIndex = 30;
             label6.Text = "Domicilio";
             // 
             // txtTelefono
             // 
-            txtTelefono.ForeColor = Color.Gray;
-            txtTelefono.Location = new Point(18, 300);
+            txtTelefono.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold);
+            txtTelefono.ForeColor = Color.Black;
+            txtTelefono.Location = new Point(23, 320);
             txtTelefono.Name = "txtTelefono";
-            txtTelefono.Size = new Size(263, 25);
+            txtTelefono.Size = new Size(300, 27);
             txtTelefono.TabIndex = 29;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label5.ForeColor = Color.FromArgb(90, 76, 105);
-            label5.Location = new Point(18, 280);
+            label5.Location = new Point(21, 295);
             label5.Name = "label5";
-            label5.Size = new Size(122, 15);
+            label5.Size = new Size(153, 20);
             label5.TabIndex = 28;
             label5.Text = "Numero de Telefono";
             // 
             // txtNombre
             // 
-            txtNombre.ForeColor = Color.Gray;
-            txtNombre.Location = new Point(18, 180);
+            txtNombre.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold);
+            txtNombre.ForeColor = Color.Black;
+            txtNombre.Location = new Point(23, 190);
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(263, 25);
+            txtNombre.Size = new Size(300, 27);
             txtNombre.TabIndex = 27;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label3.ForeColor = Color.FromArgb(90, 76, 105);
-            label3.Location = new Point(20, 160);
+            label3.Location = new Point(23, 165);
             label3.Name = "label3";
-            label3.Size = new Size(53, 15);
+            label3.Size = new Size(67, 20);
             label3.TabIndex = 26;
             label3.Text = "Nombre";
             // 
             // txtDNI
             // 
-            txtDNI.ForeColor = Color.Gray;
-            txtDNI.Location = new Point(20, 120);
+            txtDNI.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold);
+            txtDNI.ForeColor = Color.Black;
+            txtDNI.Location = new Point(25, 125);
             txtDNI.Name = "txtDNI";
-            txtDNI.Size = new Size(263, 25);
+            txtDNI.Size = new Size(300, 27);
             txtDNI.TabIndex = 25;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label4.ForeColor = Color.FromArgb(90, 76, 105);
-            label4.Location = new Point(20, 100);
+            label4.Location = new Point(23, 100);
             label4.Name = "label4";
-            label4.Size = new Size(29, 15);
+            label4.Size = new Size(37, 20);
             label4.TabIndex = 24;
             label4.Text = "DNI";
             // 
             // label2
             // 
-            label2.AutoSize = true;
             label2.BackColor = Color.Transparent;
-            label2.Font = new Font("Segoe UI Black", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Font = new Font("Segoe UI Black", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.FromArgb(123, 104, 144);
-            label2.Location = new Point(18, 60);
+            label2.Location = new Point(21, 60);
             label2.Name = "label2";
-            label2.Size = new Size(176, 28);
+            label2.Size = new Size(378, 32);
             label2.TabIndex = 23;
             label2.Text = "+ Alta de Cliente";
             label2.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // dgvClientes
             // 
+            dgvClientes.AllowUserToResizeColumns = false;
+            dgvClientes.AllowUserToResizeRows = false;
             dgvClientes.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvClientes.BackgroundColor = SystemColors.ButtonHighlight;
             dgvClientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvClientes.Columns.AddRange(new DataGridViewColumn[] { DNI, NOMBRE, APELLIDO, TELEFONO, HISTORIAL });
-            dgvClientes.Location = new Point(378, 149);
+            dgvClientes.Location = new Point(432, 149);
             dgvClientes.Name = "dgvClientes";
             dgvClientes.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dgvClientes.RowHeadersVisible = false;
             dgvClientes.RowHeadersWidth = 51;
-            dgvClientes.Size = new Size(427, 339);
+            dgvClientes.Size = new Size(488, 376);
             dgvClientes.TabIndex = 38;
             // 
             // DNI
@@ -247,59 +255,63 @@
             // 
             // txtBusqueda
             // 
-            txtBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtBusqueda.ForeColor = Color.Gray;
-            txtBusqueda.Location = new Point(673, 106);
+            txtBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            txtBusqueda.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtBusqueda.ForeColor = Color.Black;
+            txtBusqueda.Location = new Point(729, 106);
             txtBusqueda.Name = "txtBusqueda";
-            txtBusqueda.Size = new Size(132, 25);
+            txtBusqueda.Size = new Size(190, 30);
             txtBusqueda.TabIndex = 37;
             // 
             // label8
             // 
-            label8.Anchor = AnchorStyles.Top;
             label8.AutoSize = true;
             label8.BackColor = Color.Transparent;
-            label8.Font = new Font("Segoe UI Black", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label8.Font = new Font("Segoe UI Black", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.FromArgb(123, 104, 144);
-            label8.Location = new Point(378, 60);
+            label8.Location = new Point(432, 60);
             label8.Name = "label8";
-            label8.Size = new Size(198, 28);
+            label8.Size = new Size(233, 32);
             label8.TabIndex = 36;
             label8.Text = "Listado de Clientes";
             label8.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // cmbFiltros
             // 
+            cmbFiltros.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            cmbFiltros.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbFiltros.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             cmbFiltros.FormattingEnabled = true;
-            cmbFiltros.Location = new Point(567, 106);
+            cmbFiltros.Location = new Point(594, 108);
             cmbFiltros.Name = "cmbFiltros";
-            cmbFiltros.Size = new Size(79, 25);
+            cmbFiltros.Size = new Size(110, 28);
             cmbFiltros.TabIndex = 39;
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label9.ForeColor = Color.FromArgb(90, 76, 105);
-            label9.Location = new Point(19, 220);
+            label9.Location = new Point(22, 230);
             label9.Name = "label9";
-            label9.Size = new Size(52, 15);
+            label9.Size = new Size(67, 20);
             label9.TabIndex = 26;
             label9.Text = "Apellido";
             // 
             // txtApellido
             // 
-            txtApellido.ForeColor = Color.Gray;
-            txtApellido.Location = new Point(17, 240);
+            txtApellido.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold);
+            txtApellido.ForeColor = Color.Black;
+            txtApellido.Location = new Point(21, 255);
             txtApellido.Name = "txtApellido";
-            txtApellido.Size = new Size(263, 25);
+            txtApellido.Size = new Size(300, 27);
             txtApellido.TabIndex = 27;
             // 
             // GestiondeClientes
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleDimensions = new SizeF(8F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(829, 504);
+            ClientSize = new Size(947, 541);
             Controls.Add(cmbFiltros);
             Controls.Add(dgvClientes);
             Controls.Add(txtBusqueda);
@@ -320,7 +332,8 @@
             Controls.Add(label4);
             Controls.Add(label2);
             Controls.Add(label1);
-            MinimumSize = new Size(702, 431);
+            Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
+            MinimumSize = new Size(800, 431);
             Name = "GestiondeClientes";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Gestion de Clientes";
