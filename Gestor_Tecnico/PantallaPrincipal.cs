@@ -24,8 +24,7 @@ namespace Gestor_Tecnico
             CargarProductos();
         }
 
-        //Pueba1
-        //prueba2
+        
         private void CargarProductos()
         {
             dgvStock.Rows.Clear();
