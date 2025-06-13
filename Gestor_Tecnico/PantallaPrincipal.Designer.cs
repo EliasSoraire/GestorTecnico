@@ -35,14 +35,14 @@
             button4 = new Button();
             label2 = new Label();
             dgvStock = new DataGridView();
+            textBox1 = new TextBox();
+            btnAgregarProducto = new Button();
             colNombre = new DataGridViewTextBoxColumn();
             colModelo = new DataGridViewTextBoxColumn();
             colTipo = new DataGridViewTextBoxColumn();
             colStock = new DataGridViewTextBoxColumn();
             colPrecio = new DataGridViewTextBoxColumn();
-            colAcciones = new DataGridViewButtonColumn();
-            textBox1 = new TextBox();
-            btnAgregarProducto = new Button();
+            colAcciones = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvStock).BeginInit();
             SuspendLayout();
             // 
@@ -143,6 +143,32 @@
             dgvStock.Size = new Size(906, 188);
             dgvStock.TabIndex = 6;
             // 
+            // textBox1
+            // 
+            textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            textBox1.ForeColor = Color.FromArgb(108, 117, 125);
+            textBox1.Location = new Point(630, 289);
+            textBox1.Margin = new Padding(3, 4, 3, 4);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(303, 35);
+            textBox1.TabIndex = 7;
+            textBox1.Text = "Buscar Producto...";
+            // 
+            // btnAgregarProducto
+            // 
+            btnAgregarProducto.BackColor = Color.FromArgb(100, 149, 117);
+            btnAgregarProducto.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnAgregarProducto.ForeColor = Color.White;
+            btnAgregarProducto.Location = new Point(27, 289);
+            btnAgregarProducto.Margin = new Padding(3, 4, 3, 4);
+            btnAgregarProducto.Name = "btnAgregarProducto";
+            btnAgregarProducto.Size = new Size(163, 44);
+            btnAgregarProducto.TabIndex = 8;
+            btnAgregarProducto.Text = "Agregar Producto";
+            btnAgregarProducto.UseVisualStyleBackColor = false;
+            btnAgregarProducto.Click += btnAgregarProducto_Click;
+            // 
             // colNombre
             // 
             colNombre.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -185,33 +211,6 @@
             colAcciones.MinimumWidth = 6;
             colAcciones.Name = "colAcciones";
             colAcciones.Resizable = DataGridViewTriState.True;
-            colAcciones.SortMode = DataGridViewColumnSortMode.Automatic;
-            // 
-            // textBox1
-            // 
-            textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            textBox1.ForeColor = Color.FromArgb(108, 117, 125);
-            textBox1.Location = new Point(630, 289);
-            textBox1.Margin = new Padding(3, 4, 3, 4);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(303, 35);
-            textBox1.TabIndex = 7;
-            textBox1.Text = "Buscar Producto...";
-            // 
-            // btnAgregarProducto
-            // 
-            btnAgregarProducto.BackColor = Color.FromArgb(100, 149, 117);
-            btnAgregarProducto.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAgregarProducto.ForeColor = Color.White;
-            btnAgregarProducto.Location = new Point(27, 289);
-            btnAgregarProducto.Margin = new Padding(3, 4, 3, 4);
-            btnAgregarProducto.Name = "btnAgregarProducto";
-            btnAgregarProducto.Size = new Size(163, 44);
-            btnAgregarProducto.TabIndex = 8;
-            btnAgregarProducto.Text = "Agregar Producto";
-            btnAgregarProducto.UseVisualStyleBackColor = false;
-            btnAgregarProducto.Click += btnAgregarProducto_Click;
             // 
             // PantallaPrincipal
             // 
@@ -252,6 +251,6 @@
         private DataGridViewTextBoxColumn colTipo;
         private DataGridViewTextBoxColumn colStock;
         private DataGridViewTextBoxColumn colPrecio;
-        private DataGridViewButtonColumn colAcciones;
+        private DataGridViewTextBoxColumn colAcciones;
     }
 }

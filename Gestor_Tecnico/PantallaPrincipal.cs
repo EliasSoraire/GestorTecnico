@@ -16,14 +16,15 @@ namespace Gestor_Tecnico
         public PantallaPrincipal()
         {
             InitializeComponent();
-            this.Load += PantallaPrincipal_Load; // Asegura que el evento Load esté conectado
+            this.Load += PantallaPrincipal_Load;
+            dgvStock.CellPainting += dgvStock_CellPainting;
+            dgvStock.CellClick += dgvStock_CellClick;
         }
 
         private void PantallaPrincipal_Load(object sender, EventArgs e)
         {
             CargarProductos();
         }
-
 
         private void CargarProductos()
         {
@@ -52,10 +53,12 @@ namespace Gestor_Tecnico
                         dgvStock.Rows[rowIndex].Cells["colTipo"].Value = row["Tipo"].ToString();
                         dgvStock.Rows[rowIndex].Cells["colStock"].Value = row["Stock"].ToString();
                         dgvStock.Rows[rowIndex].Cells["colPrecio"].Value = Convert.ToDecimal(row["PrecioVenta"]).ToString("C2");
-                        dgvStock.Rows[rowIndex].Cells["colAcciones"].Value = "Editar / Eliminar";
-                    }
 
-                    MessageBox.Show("Productos cargados: " + dt.Rows.Count, "Carga Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        // Guardar el idProducto en la fila (invisible o Tag)
+                        dgvStock.Rows[rowIndex].Tag = row["idProducto"];
+
+                        dgvStock.Rows[rowIndex].Cells["colAcciones"].Value = "";
+                    }
                 }
             }
             catch (Exception ex)
@@ -64,15 +67,51 @@ namespace Gestor_Tecnico
             }
         }
 
+        private void dgvStock_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.ColumnIndex == dgvStock.Columns["colAcciones"].Index && e.RowIndex >= 0)
+            {
+                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+                int anchoBoton = 60;
+                int separacion = 5;
+
+                Rectangle btnEditar = new Rectangle(e.CellBounds.Left + separacion, e.CellBounds.Top + 5, anchoBoton, e.CellBounds.Height - 10);
+                Rectangle btnEliminar = new Rectangle(e.CellBounds.Left + anchoBoton + 2 * separacion, e.CellBounds.Top + 5, anchoBoton, e.CellBounds.Height - 10);
+
+                ButtonRenderer.DrawButton(e.Graphics, btnEditar, "Editar", dgvStock.Font, false, System.Windows.Forms.VisualStyles.PushButtonState.Default);
+                ButtonRenderer.DrawButton(e.Graphics, btnEliminar, "Eliminar", dgvStock.Font, false, System.Windows.Forms.VisualStyles.PushButtonState.Default);
+
+                e.Handled = true;
+            }
+        }
+
         private void dgvStock_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex >= 0 && e.ColumnIndex == dgvStock.Columns["colAcciones"].Index)
             {
-                string nombreColumna = dgvStock.Columns[e.ColumnIndex].Name;
+                Rectangle celda = dgvStock.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+                int x = dgvStock.PointToClient(Cursor.Position).X - celda.X;
+                int anchoBoton = 60;
+                int separacion = 5;
 
-                if (nombreColumna == "colAcciones")
+                if (x >= separacion && x <= separacion + anchoBoton)
                 {
-                    MessageBox.Show("Aquí iría la lógica de editar o eliminar.");
+                    // → Botón Editar
+                    int idProducto = (int)dgvStock.Rows[e.RowIndex].Tag;
+                    string nombre = dgvStock.Rows[e.RowIndex].Cells["colNombre"].Value.ToString();
+                    string modelo = dgvStock.Rows[e.RowIndex].Cells["colModelo"].Value.ToString();
+                    string tipo = dgvStock.Rows[e.RowIndex].Cells["colTipo"].Value.ToString();
+                    decimal precio = decimal.Parse(dgvStock.Rows[e.RowIndex].Cells["colPrecio"].Value.ToString(), System.Globalization.NumberStyles.Currency);
+                    int stock = int.Parse(dgvStock.Rows[e.RowIndex].Cells["colStock"].Value.ToString());
+
+                    EditarProducto formEditar = new EditarProducto(idProducto, nombre, modelo, tipo, precio, stock);
+                    formEditar.ShowDialog();
+                    CargarProductos(); // Refrescar tabla después de editar
+                }
+                else if (x >= anchoBoton + 2 * separacion && x <= anchoBoton * 2 + 2 * separacion)
+                {
+                    // → Botón Eliminar (lo dejamos para después)
+                    MessageBox.Show("Eliminar producto");
                 }
             }
         }
@@ -81,6 +120,7 @@ namespace Gestor_Tecnico
         {
             AgregarProducto formulario = new AgregarProducto();
             formulario.ShowDialog();
+            CargarProductos(); // Refrescar la tabla al cerrar el formulario
         }
     }
 }

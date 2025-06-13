@@ -28,46 +28,46 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button5 = new Button();
-            textBox5 = new TextBox();
+            btnGuardarProducto = new Button();
+            txtEditarStock = new TextBox();
             label8 = new Label();
-            textBox4 = new TextBox();
+            txtEditarPrecio = new TextBox();
             label7 = new Label();
-            textBox2 = new TextBox();
+            txtEditarModelo = new TextBox();
             label6 = new Label();
             label5 = new Label();
-            textBox1 = new TextBox();
+            txtEditarNombre = new TextBox();
             label4 = new Label();
             label3 = new Label();
-            comboBox1 = new ComboBox();
+            cmbEditarTipoProducto = new ComboBox();
             SuspendLayout();
             // 
-            // button5
+            // btnGuardarProducto
             // 
-            button5.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            button5.BackColor = Color.FromArgb(100, 149, 117);
-            button5.FlatStyle = FlatStyle.Flat;
-            button5.Font = new Font("Verdana", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button5.ForeColor = SystemColors.ButtonHighlight;
-            button5.Location = new Point(23, 501);
-            button5.Margin = new Padding(3, 4, 3, 4);
-            button5.Name = "button5";
-            button5.Size = new Size(611, 45);
-            button5.TabIndex = 39;
-            button5.Text = "Guardar Producto";
-            button5.UseVisualStyleBackColor = false;
+            btnGuardarProducto.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnGuardarProducto.BackColor = Color.FromArgb(100, 149, 117);
+            btnGuardarProducto.FlatStyle = FlatStyle.Flat;
+            btnGuardarProducto.Font = new Font("Verdana", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnGuardarProducto.ForeColor = SystemColors.ButtonHighlight;
+            btnGuardarProducto.Location = new Point(23, 501);
+            btnGuardarProducto.Margin = new Padding(3, 4, 3, 4);
+            btnGuardarProducto.Name = "btnGuardarProducto";
+            btnGuardarProducto.Size = new Size(611, 45);
+            btnGuardarProducto.TabIndex = 39;
+            btnGuardarProducto.Text = "Guardar Producto";
+            btnGuardarProducto.UseVisualStyleBackColor = false;
             // 
-            // textBox5
+            // txtEditarStock
             // 
-            textBox5.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            textBox5.ForeColor = Color.Gray;
-            textBox5.Location = new Point(23, 442);
-            textBox5.Margin = new Padding(3, 4, 3, 4);
-            textBox5.Multiline = true;
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(611, 40);
-            textBox5.TabIndex = 38;
-            textBox5.Text = "0";
+            txtEditarStock.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            txtEditarStock.ForeColor = Color.Gray;
+            txtEditarStock.Location = new Point(23, 442);
+            txtEditarStock.Margin = new Padding(3, 4, 3, 4);
+            txtEditarStock.Multiline = true;
+            txtEditarStock.Name = "txtEditarStock";
+            txtEditarStock.Size = new Size(611, 40);
+            txtEditarStock.TabIndex = 38;
+            txtEditarStock.Text = "0";
             // 
             // label8
             // 
@@ -78,17 +78,17 @@
             label8.TabIndex = 37;
             label8.Text = "Cantidad en Stock";
             // 
-            // textBox4
+            // txtEditarPrecio
             // 
-            textBox4.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            textBox4.ForeColor = Color.Gray;
-            textBox4.Location = new Point(23, 353);
-            textBox4.Margin = new Padding(3, 4, 3, 4);
-            textBox4.Multiline = true;
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(611, 40);
-            textBox4.TabIndex = 36;
-            textBox4.Text = "0.00";
+            txtEditarPrecio.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            txtEditarPrecio.ForeColor = Color.Gray;
+            txtEditarPrecio.Location = new Point(23, 353);
+            txtEditarPrecio.Margin = new Padding(3, 4, 3, 4);
+            txtEditarPrecio.Multiline = true;
+            txtEditarPrecio.Name = "txtEditarPrecio";
+            txtEditarPrecio.Size = new Size(611, 40);
+            txtEditarPrecio.TabIndex = 36;
+            txtEditarPrecio.Text = "0.00";
             // 
             // label7
             // 
@@ -99,17 +99,17 @@
             label7.TabIndex = 35;
             label7.Text = "Precio de Venta";
             // 
-            // textBox2
+            // txtEditarModelo
             // 
-            textBox2.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            textBox2.ForeColor = Color.Gray;
-            textBox2.Location = new Point(23, 165);
-            textBox2.Margin = new Padding(3, 4, 3, 4);
-            textBox2.Multiline = true;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(611, 40);
-            textBox2.TabIndex = 33;
-            textBox2.Text = "Modelo o Referencia";
+            txtEditarModelo.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            txtEditarModelo.ForeColor = Color.Gray;
+            txtEditarModelo.Location = new Point(23, 165);
+            txtEditarModelo.Margin = new Padding(3, 4, 3, 4);
+            txtEditarModelo.Multiline = true;
+            txtEditarModelo.Name = "txtEditarModelo";
+            txtEditarModelo.Size = new Size(611, 40);
+            txtEditarModelo.TabIndex = 33;
+            txtEditarModelo.Text = "Modelo o Referencia";
             // 
             // label6
             // 
@@ -129,17 +129,17 @@
             label5.TabIndex = 31;
             label5.Text = "Modelo";
             // 
-            // textBox1
+            // txtEditarNombre
             // 
-            textBox1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            textBox1.ForeColor = Color.Gray;
-            textBox1.Location = new Point(23, 78);
-            textBox1.Margin = new Padding(3, 4, 3, 4);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(611, 40);
-            textBox1.TabIndex = 30;
-            textBox1.Text = "Nombre del Producto";
+            txtEditarNombre.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            txtEditarNombre.ForeColor = Color.Gray;
+            txtEditarNombre.Location = new Point(23, 78);
+            txtEditarNombre.Margin = new Padding(3, 4, 3, 4);
+            txtEditarNombre.Multiline = true;
+            txtEditarNombre.Name = "txtEditarNombre";
+            txtEditarNombre.Size = new Size(611, 40);
+            txtEditarNombre.TabIndex = 30;
+            txtEditarNombre.Text = "Nombre del Producto";
             // 
             // label4
             // 
@@ -160,29 +160,29 @@
             label3.TabIndex = 28;
             label3.Text = "Editar Producto";
             // 
-            // comboBox1
+            // cmbEditarTipoProducto
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(23, 265);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(611, 28);
-            comboBox1.TabIndex = 40;
+            cmbEditarTipoProducto.FormattingEnabled = true;
+            cmbEditarTipoProducto.Location = new Point(23, 265);
+            cmbEditarTipoProducto.Name = "cmbEditarTipoProducto";
+            cmbEditarTipoProducto.Size = new Size(611, 28);
+            cmbEditarTipoProducto.TabIndex = 40;
             // 
             // EditarProducto
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(646, 572);
-            Controls.Add(comboBox1);
-            Controls.Add(button5);
-            Controls.Add(textBox5);
+            Controls.Add(cmbEditarTipoProducto);
+            Controls.Add(btnGuardarProducto);
+            Controls.Add(txtEditarStock);
             Controls.Add(label8);
-            Controls.Add(textBox4);
+            Controls.Add(txtEditarPrecio);
             Controls.Add(label7);
-            Controls.Add(textBox2);
+            Controls.Add(txtEditarModelo);
             Controls.Add(label6);
             Controls.Add(label5);
-            Controls.Add(textBox1);
+            Controls.Add(txtEditarNombre);
             Controls.Add(label4);
             Controls.Add(label3);
             Name = "EditarProducto";
@@ -193,17 +193,17 @@
 
         #endregion
 
-        private Button button5;
-        private TextBox textBox5;
+        private Button btnGuardarProducto;
+        private TextBox txtEditarStock;
         private Label label8;
-        private TextBox textBox4;
+        private TextBox txtEditarPrecio;
         private Label label7;
-        private TextBox textBox2;
+        private TextBox txtEditarModelo;
         private Label label6;
         private Label label5;
-        private TextBox textBox1;
+        private TextBox txtEditarNombre;
         private Label label4;
         private Label label3;
-        private ComboBox comboBox1;
+        private ComboBox cmbEditarTipoProducto;
     }
 }
