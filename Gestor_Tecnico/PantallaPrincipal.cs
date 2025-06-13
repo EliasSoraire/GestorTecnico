@@ -24,7 +24,7 @@ namespace Gestor_Tecnico
             CargarProductos();
         }
 
-        
+
         private void CargarProductos()
         {
             dgvStock.Rows.Clear();
@@ -75,6 +75,12 @@ namespace Gestor_Tecnico
                     MessageBox.Show("Aquí iría la lógica de editar o eliminar.");
                 }
             }
+        }
+
+        private void btnAgregarProducto_Click(object sender, EventArgs e)
+        {
+            AgregarProducto formulario = new AgregarProducto();
+            formulario.ShowDialog();
         }
     }
 }
