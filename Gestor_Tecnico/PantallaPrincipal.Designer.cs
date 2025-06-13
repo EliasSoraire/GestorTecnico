@@ -35,14 +35,14 @@
             button4 = new Button();
             label2 = new Label();
             dgvStock = new DataGridView();
-            textBox1 = new TextBox();
-            btnAgregarProducto = new Button();
             colNombre = new DataGridViewTextBoxColumn();
             colModelo = new DataGridViewTextBoxColumn();
             colTipo = new DataGridViewTextBoxColumn();
             colStock = new DataGridViewTextBoxColumn();
             colPrecio = new DataGridViewTextBoxColumn();
             colAcciones = new DataGridViewTextBoxColumn();
+            txtBuscarProducto = new TextBox();
+            btnAgregarProducto = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvStock).BeginInit();
             SuspendLayout();
             // 
@@ -143,32 +143,6 @@
             dgvStock.Size = new Size(906, 188);
             dgvStock.TabIndex = 6;
             // 
-            // textBox1
-            // 
-            textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            textBox1.ForeColor = Color.FromArgb(108, 117, 125);
-            textBox1.Location = new Point(630, 289);
-            textBox1.Margin = new Padding(3, 4, 3, 4);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(303, 35);
-            textBox1.TabIndex = 7;
-            textBox1.Text = "Buscar Producto...";
-            // 
-            // btnAgregarProducto
-            // 
-            btnAgregarProducto.BackColor = Color.FromArgb(100, 149, 117);
-            btnAgregarProducto.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAgregarProducto.ForeColor = Color.White;
-            btnAgregarProducto.Location = new Point(27, 289);
-            btnAgregarProducto.Margin = new Padding(3, 4, 3, 4);
-            btnAgregarProducto.Name = "btnAgregarProducto";
-            btnAgregarProducto.Size = new Size(163, 44);
-            btnAgregarProducto.TabIndex = 8;
-            btnAgregarProducto.Text = "Agregar Producto";
-            btnAgregarProducto.UseVisualStyleBackColor = false;
-            btnAgregarProducto.Click += btnAgregarProducto_Click;
-            // 
             // colNombre
             // 
             colNombre.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -212,13 +186,39 @@
             colAcciones.Name = "colAcciones";
             colAcciones.Resizable = DataGridViewTriState.True;
             // 
+            // txtBuscarProducto
+            // 
+            txtBuscarProducto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            txtBuscarProducto.ForeColor = Color.FromArgb(108, 117, 125);
+            txtBuscarProducto.Location = new Point(630, 289);
+            txtBuscarProducto.Margin = new Padding(3, 4, 3, 4);
+            txtBuscarProducto.Multiline = true;
+            txtBuscarProducto.Name = "txtBuscarProducto";
+            txtBuscarProducto.Size = new Size(303, 35);
+            txtBuscarProducto.TabIndex = 7;
+            txtBuscarProducto.Text = "Buscar Producto...";
+            // 
+            // btnAgregarProducto
+            // 
+            btnAgregarProducto.BackColor = Color.FromArgb(100, 149, 117);
+            btnAgregarProducto.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnAgregarProducto.ForeColor = Color.White;
+            btnAgregarProducto.Location = new Point(27, 289);
+            btnAgregarProducto.Margin = new Padding(3, 4, 3, 4);
+            btnAgregarProducto.Name = "btnAgregarProducto";
+            btnAgregarProducto.Size = new Size(163, 44);
+            btnAgregarProducto.TabIndex = 8;
+            btnAgregarProducto.Text = "Agregar Producto";
+            btnAgregarProducto.UseVisualStyleBackColor = false;
+            btnAgregarProducto.Click += btnAgregarProducto_Click;
+            // 
             // PantallaPrincipal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(961, 554);
             Controls.Add(btnAgregarProducto);
-            Controls.Add(textBox1);
+            Controls.Add(txtBuscarProducto);
             Controls.Add(dgvStock);
             Controls.Add(label2);
             Controls.Add(button4);
@@ -244,7 +244,7 @@
         private Button button4;
         private Label label2;
         private DataGridView dgvStock;
-        private TextBox textBox1;
+        private TextBox txtBuscarProducto;
         private Button btnAgregarProducto;
         private DataGridViewTextBoxColumn colNombre;
         private DataGridViewTextBoxColumn colModelo;

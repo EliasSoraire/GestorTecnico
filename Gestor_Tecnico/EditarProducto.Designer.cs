@@ -162,11 +162,13 @@
             // 
             // cmbEditarTipoProducto
             // 
+            cmbEditarTipoProducto.DisplayMember = "Descripcion";
             cmbEditarTipoProducto.FormattingEnabled = true;
             cmbEditarTipoProducto.Location = new Point(23, 265);
             cmbEditarTipoProducto.Name = "cmbEditarTipoProducto";
             cmbEditarTipoProducto.Size = new Size(611, 28);
             cmbEditarTipoProducto.TabIndex = 40;
+            cmbEditarTipoProducto.ValueMember = "idTipoProducto";
             // 
             // EditarProducto
             // 
