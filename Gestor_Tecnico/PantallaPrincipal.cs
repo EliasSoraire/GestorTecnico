@@ -11,6 +11,7 @@ namespace Gestor_Tecnico
         public PantallaPrincipal()
         {
             InitializeComponent();
+            dgvStock.AllowUserToAddRows = false;
             this.Load += PantallaPrincipal_Load;
             dgvStock.CellPainting += dgvStock_CellPainting;
             dgvStock.CellClick += dgvStock_CellClick;
@@ -62,7 +63,6 @@ namespace Gestor_Tecnico
                         dgvStock.Rows[rowIndex].Cells["colStock"].Value = row["Stock"].ToString();
                         dgvStock.Rows[rowIndex].Cells["colPrecio"].Value = Convert.ToDecimal(row["PrecioVenta"]).ToString("C2");
 
-                        
                         dgvStock.Rows[rowIndex].Tag = row["idProducto"];
                         dgvStock.Rows[rowIndex].Cells["colAcciones"].Value = "";
                     }
@@ -103,7 +103,6 @@ namespace Gestor_Tecnico
 
                 if (x >= separacion && x <= separacion + anchoBoton)
                 {
-                    
                     int idProducto = (int)dgvStock.Rows[e.RowIndex].Tag;
                     string nombre = dgvStock.Rows[e.RowIndex].Cells["colNombre"].Value.ToString();
                     string modelo = dgvStock.Rows[e.RowIndex].Cells["colModelo"].Value.ToString();
@@ -112,12 +111,11 @@ namespace Gestor_Tecnico
                     int stock = int.Parse(dgvStock.Rows[e.RowIndex].Cells["colStock"].Value.ToString());
 
                     EditarProducto formEditar = new EditarProducto(idProducto, nombre, modelo, tipo, precio, stock);
-                    formEditar.ProductoEditado += (s, args) => CargarProductos(txtBuscarProducto.Text);
+                    formEditar.ProductoEditado += (s, args) => CargarProductos(); // sin filtro
                     formEditar.ShowDialog();
                 }
                 else if (x >= anchoBoton + 2 * separacion && x <= anchoBoton * 2 + 2 * separacion)
                 {
-                    
                     int idProducto = (int)dgvStock.Rows[e.RowIndex].Tag;
                     string nombre = dgvStock.Rows[e.RowIndex].Cells["colNombre"].Value.ToString();
 
@@ -129,7 +127,7 @@ namespace Gestor_Tecnico
                     if (confirm == DialogResult.Yes)
                     {
                         EliminarProducto(idProducto);
-                        CargarProductos(txtBuscarProducto.Text);
+                        CargarProductos(); // sin filtro
                     }
                 }
             }
@@ -167,7 +165,7 @@ namespace Gestor_Tecnico
         {
             AgregarProducto formulario = new AgregarProducto();
             formulario.ShowDialog();
-            CargarProductos(txtBuscarProducto.Text);
+            CargarProductos(); // sin filtro
         }
     }
 }

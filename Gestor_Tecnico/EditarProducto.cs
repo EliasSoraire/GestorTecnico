@@ -8,8 +8,6 @@ namespace Gestor_Tecnico
     public partial class EditarProducto : Form
     {
         private int _idProducto;
-
-        // ✅ Evento para notificar a PantallaPrincipal que se editó algo
         public event EventHandler ProductoEditado;
 
         public EditarProducto()
@@ -22,9 +20,9 @@ namespace Gestor_Tecnico
             InitializeComponent();
 
             _idProducto = idProducto;
-
             CargarTiposProducto();
 
+            // Llenar los campos con los datos recibidos
             txtEditarNombre.Text = nombre;
             txtEditarModelo.Text = modelo;
             txtEditarPrecio.Text = precio.ToString();
@@ -34,8 +32,15 @@ namespace Gestor_Tecnico
             if (index != -1)
                 cmbEditarTipoProducto.SelectedIndex = index;
 
+            cmbEditarTipoProducto.DropDownStyle = ComboBoxStyle.DropDown;
+
+            // Evento del botón
             btnGuardarProducto.Click += btnGuardarProducto_Click;
+
+            // Activar placeholders
+            AgregarPlaceholders();
         }
+
 
         private void CargarTiposProducto()
         {
@@ -71,21 +76,21 @@ namespace Gestor_Tecnico
                 string.IsNullOrWhiteSpace(txtEditarModelo.Text) ||
                 string.IsNullOrWhiteSpace(txtEditarPrecio.Text) ||
                 string.IsNullOrWhiteSpace(txtEditarStock.Text) ||
-                cmbEditarTipoProducto.SelectedItem == null) // ✅ FIX: esto es lo correcto con DataSource
+                cmbEditarTipoProducto.SelectedItem == null)
             {
                 MessageBox.Show("Por favor, completá todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (!decimal.TryParse(txtEditarPrecio.Text, out decimal precio))
+            if (!decimal.TryParse(txtEditarPrecio.Text, out decimal precio) || precio < 0)
             {
-                MessageBox.Show("El precio debe ser un número válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("El precio debe ser un número válido y no negativo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (!int.TryParse(txtEditarStock.Text, out int stock))
+            if (!int.TryParse(txtEditarStock.Text, out int stock) || stock < 0)
             {
-                MessageBox.Show("El stock debe ser un número entero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("El stock debe ser un número entero y no negativo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -101,12 +106,12 @@ namespace Gestor_Tecnico
                 {
                     conn.Open();
                     string query = @"UPDATE Producto
-                                     SET Nombre = @Nombre,
-                                         Modelo = @Modelo,
-                                         idTipoProducto = @Tipo,
-                                         PrecioVenta = @Precio,
-                                         Stock = @Stock
-                                     WHERE idProducto = @Id";
+                             SET Nombre = @Nombre,
+                                 Modelo = @Modelo,
+                                 idTipoProducto = @Tipo,
+                                 PrecioVenta = @Precio,
+                                 Stock = @Stock
+                             WHERE idProducto = @Id";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -122,8 +127,9 @@ namespace Gestor_Tecnico
 
                     MessageBox.Show("Producto actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // ✅ Notificar a PantallaPrincipal que se editó un producto
+                    // 🔽 ESTA ES LA LÍNEA QUE TIENE QUE ESTAR
                     ProductoEditado?.Invoke(this, EventArgs.Empty);
+
                     this.Close();
                 }
             }
@@ -132,5 +138,64 @@ namespace Gestor_Tecnico
                 MessageBox.Show("Error al actualizar producto:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
+        private void AgregarPlaceholders()
+        {
+            if (string.IsNullOrWhiteSpace(txtEditarNombre.Text))
+            {
+                txtEditarNombre.Text = "Ingrese nombre del producto";
+                txtEditarNombre.ForeColor = System.Drawing.Color.Gray;
+            }
+            txtEditarNombre.GotFocus += (s, e) =>
+            {
+                if (txtEditarNombre.Text == "Ingrese nombre del producto")
+                {
+                    txtEditarNombre.Text = "";
+                    txtEditarNombre.ForeColor = System.Drawing.Color.Black;
+                }
+            };
+            txtEditarNombre.LostFocus += (s, e) =>
+            {
+                if (string.IsNullOrWhiteSpace(txtEditarNombre.Text))
+                {
+                    txtEditarNombre.Text = "Ingrese nombre del producto";
+                    txtEditarNombre.ForeColor = System.Drawing.Color.Gray;
+                }
+            };
+
+            if (string.IsNullOrWhiteSpace(txtEditarModelo.Text))
+            {
+                txtEditarModelo.Text = "Modelo o referencia";
+                txtEditarModelo.ForeColor = System.Drawing.Color.Gray;
+            }
+            txtEditarModelo.GotFocus += (s, e) =>
+            {
+                if (txtEditarModelo.Text == "Modelo o referencia")
+                {
+                    txtEditarModelo.Text = "";
+                    txtEditarModelo.ForeColor = System.Drawing.Color.Black;
+                }
+            };
+            txtEditarModelo.LostFocus += (s, e) =>
+            {
+                if (string.IsNullOrWhiteSpace(txtEditarModelo.Text))
+                {
+                    txtEditarModelo.Text = "Modelo o referencia";
+                    txtEditarModelo.ForeColor = System.Drawing.Color.Gray;
+                }
+            };
+
+            if (string.IsNullOrWhiteSpace(txtEditarPrecio.Text))
+            {
+                txtEditarPrecio.Text = "0";
+            }
+
+            if (string.IsNullOrWhiteSpace(txtEditarStock.Text))
+            {
+                txtEditarStock.Text = "0";
+            }
+        }
+
     }
 }

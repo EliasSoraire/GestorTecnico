@@ -67,7 +67,6 @@
             txtEditarStock.Name = "txtEditarStock";
             txtEditarStock.Size = new Size(611, 40);
             txtEditarStock.TabIndex = 38;
-            txtEditarStock.Text = "0";
             // 
             // label8
             // 
@@ -88,7 +87,6 @@
             txtEditarPrecio.Name = "txtEditarPrecio";
             txtEditarPrecio.Size = new Size(611, 40);
             txtEditarPrecio.TabIndex = 36;
-            txtEditarPrecio.Text = "0.00";
             // 
             // label7
             // 
@@ -109,7 +107,6 @@
             txtEditarModelo.Name = "txtEditarModelo";
             txtEditarModelo.Size = new Size(611, 40);
             txtEditarModelo.TabIndex = 33;
-            txtEditarModelo.Text = "Modelo o Referencia";
             // 
             // label6
             // 
@@ -139,7 +136,6 @@
             txtEditarNombre.Name = "txtEditarNombre";
             txtEditarNombre.Size = new Size(611, 40);
             txtEditarNombre.TabIndex = 30;
-            txtEditarNombre.Text = "Nombre del Producto";
             // 
             // label4
             // 
