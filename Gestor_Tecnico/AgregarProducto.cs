@@ -53,7 +53,7 @@ namespace Gestor_Tecnico
                 string.IsNullOrWhiteSpace(txtModelo.Text) ||
                 string.IsNullOrWhiteSpace(txtStock.Text) ||
                 string.IsNullOrWhiteSpace(txtPrecio.Text) ||
-                cmbTipoProducto.SelectedItem == null)
+                string.IsNullOrWhiteSpace(cmbTipoProducto.Text))
             {
                 MessageBox.Show("Por favor, completá todos los campos.", "Campos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -73,16 +73,40 @@ namespace Gestor_Tecnico
 
             string nombre = txtNombre.Text.Trim();
             string modelo = txtModelo.Text.Trim();
-            int tipoProductoId = Convert.ToInt32(((DataRowView)cmbTipoProducto.SelectedItem)["idTipoProducto"]);
+            string tipoTexto = cmbTipoProducto.Text.Trim();
 
             string conexion = "Server=DESKTOP-JJJUFEH\\SQLEXPRESS02;Database=Gestor_Tecnico;Integrated Security=true;";
+            int tipoProductoId;
 
             try
             {
                 using (SqlConnection conn = new SqlConnection(conexion))
                 {
+                    conn.Open();
+
+                    // Buscar si ya existe ese tipo
+                    string buscarTipo = "SELECT idTipoProducto FROM TiposProducto WHERE Descripcion = @Descripcion";
+                    SqlCommand buscarCmd = new SqlCommand(buscarTipo, conn);
+                    buscarCmd.Parameters.AddWithValue("@Descripcion", tipoTexto);
+
+                    object result = buscarCmd.ExecuteScalar();
+
+                    if (result != null)
+                    {
+                        tipoProductoId = Convert.ToInt32(result);
+                    }
+                    else
+                    {
+                        // Insertar nuevo tipo si no existe
+                        string insertarTipo = "INSERT INTO TiposProducto (Descripcion) OUTPUT INSERTED.idTipoProducto VALUES (@Descripcion)";
+                        SqlCommand insertCmd = new SqlCommand(insertarTipo, conn);
+                        insertCmd.Parameters.AddWithValue("@Descripcion", tipoTexto);
+                        tipoProductoId = (int)insertCmd.ExecuteScalar();
+                    }
+
+                    // Insertar el producto
                     string query = @"INSERT INTO Producto (Nombre, Modelo, idTipoProducto, PrecioVenta, Stock)
-                                     VALUES (@Nombre, @Modelo, @Tipo, @Precio, @Stock)";
+                             VALUES (@Nombre, @Modelo, @Tipo, @Precio, @Stock)";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@Nombre", nombre);
@@ -91,10 +115,8 @@ namespace Gestor_Tecnico
                     cmd.Parameters.AddWithValue("@Precio", precio);
                     cmd.Parameters.AddWithValue("@Stock", stock);
 
-                    conn.Open();
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("Producto agregado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                     LimpiarFormulario();
                 }
             }
@@ -103,6 +125,7 @@ namespace Gestor_Tecnico
                 MessageBox.Show("Error al agregar producto: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void LimpiarFormulario()
         {
@@ -150,7 +173,39 @@ namespace Gestor_Tecnico
             };
 
             txtPrecio.Text = "0";
+            txtPrecio.ForeColor = System.Drawing.Color.Gray;
+            txtPrecio.GotFocus += (s, e) => {
+                if (txtPrecio.Text == "0")
+                {
+                    txtPrecio.Text = "";
+                    txtPrecio.ForeColor = System.Drawing.Color.Black;
+                }
+            };
+            txtPrecio.LostFocus += (s, e) => {
+                if (string.IsNullOrWhiteSpace(txtPrecio.Text))
+                {
+                    txtPrecio.Text = "0";
+                    txtPrecio.ForeColor = System.Drawing.Color.Gray;
+                }
+            };
+
             txtStock.Text = "0";
+            txtStock.ForeColor = System.Drawing.Color.Gray;
+            txtStock.GotFocus += (s, e) => {
+                if (txtStock.Text == "0")
+                {
+                    txtStock.Text = "";
+                    txtStock.ForeColor = System.Drawing.Color.Black;
+                }
+            };
+            txtStock.LostFocus += (s, e) => {
+                if (string.IsNullOrWhiteSpace(txtStock.Text))
+                {
+                    txtStock.Text = "0";
+                    txtStock.ForeColor = System.Drawing.Color.Gray;
+                }
+            };
         }
+
     }
 }

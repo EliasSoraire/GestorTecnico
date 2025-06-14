@@ -76,7 +76,7 @@ namespace Gestor_Tecnico
                 string.IsNullOrWhiteSpace(txtEditarModelo.Text) ||
                 string.IsNullOrWhiteSpace(txtEditarPrecio.Text) ||
                 string.IsNullOrWhiteSpace(txtEditarStock.Text) ||
-                cmbEditarTipoProducto.SelectedItem == null)
+                string.IsNullOrWhiteSpace(cmbEditarTipoProducto.Text))
             {
                 MessageBox.Show("Por favor, completá todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -96,7 +96,8 @@ namespace Gestor_Tecnico
 
             string nombre = txtEditarNombre.Text.Trim();
             string modelo = txtEditarModelo.Text.Trim();
-            int idTipoProducto = Convert.ToInt32(((DataRowView)cmbEditarTipoProducto.SelectedItem)["idTipoProducto"]);
+            string tipoTexto = cmbEditarTipoProducto.Text.Trim();
+            int idTipoProducto;
 
             string conexion = "Server=DESKTOP-JJJUFEH\\SQLEXPRESS02;Database=Gestor_Tecnico;Integrated Security=true;";
 
@@ -105,6 +106,27 @@ namespace Gestor_Tecnico
                 using (SqlConnection conn = new SqlConnection(conexion))
                 {
                     conn.Open();
+
+                    // Buscar si ya existe ese tipo
+                    string buscarTipo = "SELECT idTipoProducto FROM TiposProducto WHERE Descripcion = @Descripcion";
+                    SqlCommand buscarCmd = new SqlCommand(buscarTipo, conn);
+                    buscarCmd.Parameters.AddWithValue("@Descripcion", tipoTexto);
+
+                    object result = buscarCmd.ExecuteScalar();
+
+                    if (result != null)
+                    {
+                        idTipoProducto = Convert.ToInt32(result);
+                    }
+                    else
+                    {
+                        // Insertar nuevo tipo si no existe
+                        string insertarTipo = "INSERT INTO TiposProducto (Descripcion) OUTPUT INSERTED.idTipoProducto VALUES (@Descripcion)";
+                        SqlCommand insertCmd = new SqlCommand(insertarTipo, conn);
+                        insertCmd.Parameters.AddWithValue("@Descripcion", tipoTexto);
+                        idTipoProducto = (int)insertCmd.ExecuteScalar();
+                    }
+
                     string query = @"UPDATE Producto
                              SET Nombre = @Nombre,
                                  Modelo = @Modelo,
@@ -126,10 +148,7 @@ namespace Gestor_Tecnico
                     }
 
                     MessageBox.Show("Producto actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    // 🔽 ESTA ES LA LÍNEA QUE TIENE QUE ESTAR
                     ProductoEditado?.Invoke(this, EventArgs.Empty);
-
                     this.Close();
                 }
             }
@@ -138,6 +157,7 @@ namespace Gestor_Tecnico
                 MessageBox.Show("Error al actualizar producto:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
 
         private void AgregarPlaceholders()
