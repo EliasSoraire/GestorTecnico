@@ -2,16 +2,24 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace Gestor_Tecnico
 {
     public partial class AgregarProducto : Form
     {
+        private ConexionSQL conexionSQL;
+
         public AgregarProducto()
         {
             InitializeComponent();
+            conexionSQL = new ConexionSQL();
             this.Load += AgregarProducto_Load;
             btnAgregarProducto.Click += BtnAgregarProducto_Click;
+
+            // Agregar validaciones de entrada
+            txtPrecio.KeyPress += TxtPrecio_KeyPress;
+            txtStock.KeyPress += TxtStock_KeyPress;
         }
 
         private void AgregarProducto_Load(object sender, EventArgs e)
@@ -22,14 +30,45 @@ namespace Gestor_Tecnico
             cmbTipoProducto.DropDownStyle = ComboBoxStyle.DropDown;
         }
 
+        // Validación para el campo Precio - permite números y un decimal
+        private void TxtPrecio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+
+            // Permitir números, backspace, delete
+            if (char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back || e.KeyChar == (char)Keys.Delete)
+            {
+                e.Handled = false;
+            }
+            // Permitir punto decimal o coma (según configuración regional)
+            else if ((e.KeyChar == '.' || e.KeyChar == ',') && !textBox.Text.Contains(".") && !textBox.Text.Contains(","))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true; // Bloquear cualquier otro carácter
+            }
+        }
+
+        // Validación para el campo Stock - solo números enteros
+        private void TxtStock_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Solo permitir números, backspace y delete
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back && e.KeyChar != (char)Keys.Delete)
+            {
+                e.Handled = true; // Bloquear cualquier carácter que no sea número
+            }
+        }
+
         private void CargarTiposProducto()
         {
-            string conexion = "Server=DESKTOP-JJJUFEH\\SQLEXPRESS02;Database=Gestor_Tecnico;Integrated Security=true;";
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(conexion))
+                using (SqlConnection conn = conexionSQL.ObtenerConexion())
                 {
+                    if (conn == null) return;
+
                     string query = "SELECT idTipoProducto, Descripcion FROM TiposProducto";
                     SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
                     DataTable dt = new DataTable();
@@ -49,10 +88,11 @@ namespace Gestor_Tecnico
 
         private void BtnAgregarProducto_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
-                string.IsNullOrWhiteSpace(txtModelo.Text) ||
-                string.IsNullOrWhiteSpace(txtStock.Text) ||
-                string.IsNullOrWhiteSpace(txtPrecio.Text) ||
+            // Validar que no sean placeholders
+            if (txtNombre.Text == "Ingrese nombre del producto" || string.IsNullOrWhiteSpace(txtNombre.Text) ||
+                txtModelo.Text == "Modelo o referencia" || string.IsNullOrWhiteSpace(txtModelo.Text) ||
+                txtStock.Text == "0" || string.IsNullOrWhiteSpace(txtStock.Text) ||
+                txtPrecio.Text == "0" || string.IsNullOrWhiteSpace(txtPrecio.Text) ||
                 string.IsNullOrWhiteSpace(cmbTipoProducto.Text))
             {
                 MessageBox.Show("Por favor, completá todos los campos.", "Campos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -61,13 +101,15 @@ namespace Gestor_Tecnico
 
             if (!int.TryParse(txtStock.Text, out int stock) || stock < 0)
             {
-                MessageBox.Show("El stock debe ser un número entero y no negativo.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("El stock debe ser un número entero válido y no negativo.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtStock.Focus();
                 return;
             }
 
-            if (!decimal.TryParse(txtPrecio.Text, out decimal precio) || precio < 0)
+            if (!decimal.TryParse(txtPrecio.Text, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out decimal precio) || precio <= 0)
             {
-                MessageBox.Show("El precio debe ser un número decimal válido y no negativo.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("El precio debe ser un número decimal válido y mayor a cero.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPrecio.Focus();
                 return;
             }
 
@@ -75,14 +117,13 @@ namespace Gestor_Tecnico
             string modelo = txtModelo.Text.Trim();
             string tipoTexto = cmbTipoProducto.Text.Trim();
 
-            string conexion = "Server=DESKTOP-JJJUFEH\\SQLEXPRESS02;Database=Gestor_Tecnico;Integrated Security=true;";
             int tipoProductoId;
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(conexion))
+                using (SqlConnection conn = conexionSQL.ObtenerConexion())
                 {
-                    conn.Open();
+                    if (conn == null) return;
 
                     // Buscar si ya existe ese tipo
                     string buscarTipo = "SELECT idTipoProducto FROM TiposProducto WHERE Descripcion = @Descripcion";
@@ -126,13 +167,16 @@ namespace Gestor_Tecnico
             }
         }
 
-
         private void LimpiarFormulario()
         {
             txtNombre.Text = "Ingrese nombre del producto";
+            txtNombre.ForeColor = System.Drawing.Color.Gray;
             txtModelo.Text = "Modelo o referencia";
+            txtModelo.ForeColor = System.Drawing.Color.Gray;
             txtPrecio.Text = "0";
+            txtPrecio.ForeColor = System.Drawing.Color.Gray;
             txtStock.Text = "0";
+            txtStock.ForeColor = System.Drawing.Color.Gray;
             cmbTipoProducto.SelectedIndex = -1;
         }
 
@@ -206,6 +250,5 @@ namespace Gestor_Tecnico
                 }
             };
         }
-
     }
 }

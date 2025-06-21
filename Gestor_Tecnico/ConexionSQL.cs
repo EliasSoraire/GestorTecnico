@@ -11,7 +11,7 @@ namespace Gestor_Tecnico
 
         public ConexionSQL()
         {
-            cadenaConexion = "Server=DESKTOP-JJJUFEH\\SQLEXPRESS02;Database=Gestor_Tecnico;Trusted_Connection=True;";
+            cadenaConexion = "Server=(localdb)\\MSSQLLocalDB;Database=Gestor_Tecnico;Trusted_Connection=True;";
         }
 
         public SqlConnection ObtenerConexion()

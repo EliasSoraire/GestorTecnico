@@ -28,7 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
+            panelHeader = new Panel();
+            lblSubtitle = new Label();
+            lblTitle = new Label();
+            panelConfig = new Panel();
             button2 = new Button();
             button1 = new Button();
             dateTimePicker2 = new DateTimePicker();
@@ -38,72 +41,118 @@
             comboBox1 = new ComboBox();
             label4 = new Label();
             label2 = new Label();
-            dataGridView1 = new DataGridView();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            label12 = new Label();
-            panel1 = new Panel();
+            panelStats = new Panel();
             label7 = new Label();
             label6 = new Label();
             label8 = new Label();
             label9 = new Label();
             label10 = new Label();
             label11 = new Label();
+            panelGrid = new Panel();
+            dataGridView1 = new DataGridView();
+            Column1 = new DataGridViewTextBoxColumn();
+            Column2 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
+            label12 = new Label();
+            panelHeader.SuspendLayout();
+            panelConfig.SuspendLayout();
+            panelStats.SuspendLayout();
+            panelGrid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            panel1.SuspendLayout();
             SuspendLayout();
             // 
-            // label1
+            // panelHeader
             // 
-            label1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            label1.BackColor = Color.FromArgb(150, 102, 102);
-            label1.Font = new Font("Microsoft Sans Serif", 13.8F);
-            label1.ForeColor = SystemColors.ButtonHighlight;
-            label1.Location = new Point(-2, -3);
-            label1.Name = "label1";
-            label1.Size = new Size(832, 59);
-            label1.TabIndex = 2;
-            label1.Text = "Reportes";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
+            panelHeader.BackColor = Color.FromArgb(41, 53, 65);
+            panelHeader.Controls.Add(lblSubtitle);
+            panelHeader.Controls.Add(lblTitle);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(827, 91);
+            panelHeader.TabIndex = 0;
+            // 
+            // lblSubtitle
+            // 
+            lblSubtitle.AutoSize = true;
+            lblSubtitle.Font = new Font("Segoe UI", 10F);
+            lblSubtitle.ForeColor = Color.FromArgb(189, 195, 199);
+            lblSubtitle.Location = new Point(20, 57);
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Size = new Size(210, 19);
+            lblSubtitle.TabIndex = 1;
+            lblSubtitle.Text = "Generación y análisis de reportes";
+            // 
+            // lblTitle
+            // 
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Location = new Point(20, 17);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(116, 32);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Reportes";
+            // 
+            // panelConfig
+            // 
+            panelConfig.BackColor = Color.White;
+            panelConfig.Controls.Add(button2);
+            panelConfig.Controls.Add(button1);
+            panelConfig.Controls.Add(dateTimePicker2);
+            panelConfig.Controls.Add(label5);
+            panelConfig.Controls.Add(dateTimePicker1);
+            panelConfig.Controls.Add(label3);
+            panelConfig.Controls.Add(comboBox1);
+            panelConfig.Controls.Add(label4);
+            panelConfig.Controls.Add(label2);
+            panelConfig.Location = new Point(20, 113);
+            panelConfig.Name = "panelConfig";
+            panelConfig.Size = new Size(787, 220);
+            panelConfig.TabIndex = 1;
             // 
             // button2
             // 
-            button2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            button2.BackColor = Color.FromArgb(180, 132, 132);
-            button2.ForeColor = SystemColors.ButtonHighlight;
-            button2.Location = new Point(113, 346);
+            button2.BackColor = Color.FromArgb(52, 73, 94);
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button2.ForeColor = Color.White;
+            button2.Location = new Point(410, 170);
             button2.Name = "button2";
-            button2.Size = new Size(610, 37);
+            button2.Size = new Size(350, 35);
             button2.TabIndex = 31;
-            button2.Text = "Generar PDF";
+            button2.Text = "📄 Generar PDF";
             button2.UseVisualStyleBackColor = false;
             // 
             // button1
             // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            button1.BackColor = Color.FromArgb(150, 102, 102);
-            button1.ForeColor = SystemColors.ButtonHighlight;
-            button1.Location = new Point(113, 304);
+            button1.BackColor = Color.FromArgb(41, 53, 65);
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button1.ForeColor = Color.White;
+            button1.Location = new Point(30, 170);
             button1.Name = "button1";
-            button1.Size = new Size(610, 37);
+            button1.Size = new Size(350, 35);
             button1.TabIndex = 30;
-            button1.Text = "Generar Reporte";
+            button1.Text = "📊 Generar Reporte";
             button1.UseVisualStyleBackColor = false;
             // 
             // dateTimePicker2
             // 
-            dateTimePicker2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            dateTimePicker2.Location = new Point(113, 257);
+            dateTimePicker2.Font = new Font("Segoe UI", 10F);
+            dateTimePicker2.Location = new Point(410, 130);
             dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(610, 25);
+            dateTimePicker2.Size = new Size(350, 25);
             dateTimePicker2.TabIndex = 29;
             // 
             // label5
             // 
-            label5.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(113, 233);
+            label5.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            label5.ForeColor = Color.FromArgb(41, 53, 65);
+            label5.Location = new Point(410, 100);
             label5.Name = "label5";
             label5.Size = new Size(166, 21);
             label5.TabIndex = 28;
@@ -111,16 +160,17 @@
             // 
             // dateTimePicker1
             // 
-            dateTimePicker1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            dateTimePicker1.Location = new Point(113, 197);
+            dateTimePicker1.Font = new Font("Segoe UI", 10F);
+            dateTimePicker1.Location = new Point(30, 130);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(610, 25);
+            dateTimePicker1.Size = new Size(350, 25);
             dateTimePicker1.TabIndex = 27;
             // 
             // label3
             // 
-            label3.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(113, 173);
+            label3.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            label3.ForeColor = Color.FromArgb(41, 53, 65);
+            label3.Location = new Point(30, 100);
             label3.Name = "label3";
             label3.Size = new Size(166, 21);
             label3.TabIndex = 26;
@@ -128,18 +178,19 @@
             // 
             // comboBox1
             // 
-            comboBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            comboBox1.Font = new Font("Segoe UI", 10F);
             comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Semanal" });
-            comboBox1.Location = new Point(113, 137);
+            comboBox1.Items.AddRange(new object[] { "Semanal", "Mensual", "Anual" });
+            comboBox1.Location = new Point(410, 60);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(610, 25);
+            comboBox1.Size = new Size(350, 25);
             comboBox1.TabIndex = 25;
             // 
             // label4
             // 
-            label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(113, 114);
+            label4.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            label4.ForeColor = Color.FromArgb(41, 53, 65);
+            label4.Location = new Point(410, 30);
             label4.Name = "label4";
             label4.Size = new Size(166, 21);
             label4.TabIndex = 24;
@@ -147,28 +198,116 @@
             // 
             // label2
             // 
-            label2.BackColor = Color.Transparent;
-            label2.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.FromArgb(150, 102, 102);
-            label2.Location = new Point(45, 68);
+            label2.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            label2.ForeColor = Color.FromArgb(41, 53, 65);
+            label2.Location = new Point(20, 17);
             label2.Name = "label2";
-            label2.Size = new Size(186, 39);
+            label2.Size = new Size(206, 25);
             label2.TabIndex = 23;
             label2.Text = "Configurar Reporte";
-            label2.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // panelStats
+            // 
+            panelStats.BackColor = Color.FromArgb(236, 240, 241);
+            panelStats.Controls.Add(label7);
+            panelStats.Controls.Add(label6);
+            panelStats.Controls.Add(label8);
+            panelStats.Controls.Add(label9);
+            panelStats.Controls.Add(label10);
+            panelStats.Controls.Add(label11);
+            panelStats.Location = new Point(20, 355);
+            panelStats.Name = "panelStats";
+            panelStats.Size = new Size(787, 88);
+            panelStats.TabIndex = 2;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            label7.ForeColor = Color.FromArgb(39, 174, 96);
+            label7.Location = new Point(20, 42);
+            label7.Name = "label7";
+            label7.Size = new Size(99, 25);
+            label7.TabIndex = 40;
+            label7.Text = "$ 500.000";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            label6.ForeColor = Color.FromArgb(52, 73, 94);
+            label6.Location = new Point(20, 17);
+            label6.Name = "label6";
+            label6.Size = new Size(93, 19);
+            label6.TabIndex = 41;
+            label6.Text = "Total Ventas:";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            label8.ForeColor = Color.FromArgb(39, 174, 96);
+            label8.Location = new Point(270, 42);
+            label8.Name = "label8";
+            label8.Size = new Size(99, 25);
+            label8.TabIndex = 42;
+            label8.Text = "$ 500.000";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            label9.ForeColor = Color.FromArgb(52, 73, 94);
+            label9.Location = new Point(270, 17);
+            label9.Name = "label9";
+            label9.Size = new Size(140, 19);
+            label9.TabIndex = 43;
+            label9.Text = "Total Reparaciones:";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            label10.ForeColor = Color.FromArgb(39, 174, 96);
+            label10.Location = new Point(550, 42);
+            label10.Name = "label10";
+            label10.Size = new Size(115, 25);
+            label10.TabIndex = 44;
+            label10.Text = "$ 1.000.000";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            label11.ForeColor = Color.FromArgb(52, 73, 94);
+            label11.Location = new Point(550, 17);
+            label11.Name = "label11";
+            label11.Size = new Size(102, 19);
+            label11.TabIndex = 45;
+            label11.Text = "Total General:";
+            // 
+            // panelGrid
+            // 
+            panelGrid.BackColor = Color.White;
+            panelGrid.Controls.Add(dataGridView1);
+            panelGrid.Controls.Add(label12);
+            panelGrid.Location = new Point(20, 465);
+            panelGrid.Name = "panelGrid";
+            panelGrid.Size = new Size(787, 150);
+            panelGrid.TabIndex = 3;
             // 
             // dataGridView1
             // 
-            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dataGridView1.BackgroundColor = SystemColors.ButtonHighlight;
+            dataGridView1.BackgroundColor = Color.White;
+            dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4 });
-            dataGridView1.Location = new Point(88, 522);
+            dataGridView1.GridColor = Color.FromArgb(189, 195, 199);
+            dataGridView1.Location = new Point(20, 45);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(648, 106);
+            dataGridView1.Size = new Size(747, 90);
             dataGridView1.TabIndex = 33;
             // 
             // Column1
@@ -176,19 +315,19 @@
             Column1.HeaderText = "Fecha";
             Column1.MinimumWidth = 6;
             Column1.Name = "Column1";
-            Column1.Width = 125;
+            Column1.Width = 150;
             // 
             // Column2
             // 
             Column2.HeaderText = "Tipo";
             Column2.MinimumWidth = 6;
             Column2.Name = "Column2";
-            Column2.Width = 125;
+            Column2.Width = 150;
             // 
             // Column3
             // 
             Column3.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Column3.HeaderText = "Descripcion";
+            Column3.HeaderText = "Descripción";
             Column3.MinimumWidth = 6;
             Column3.Name = "Column3";
             // 
@@ -197,139 +336,49 @@
             Column4.HeaderText = "Monto";
             Column4.MinimumWidth = 6;
             Column4.Name = "Column4";
-            Column4.Width = 125;
+            Column4.Width = 150;
             // 
             // label12
             // 
-            label12.BackColor = Color.Transparent;
-            label12.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label12.ForeColor = Color.FromArgb(150, 102, 102);
-            label12.Location = new Point(36, 480);
+            label12.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            label12.ForeColor = Color.FromArgb(41, 53, 65);
+            label12.Location = new Point(20, 17);
             label12.Name = "label12";
-            label12.Size = new Size(248, 39);
+            label12.Size = new Size(248, 25);
             label12.TabIndex = 32;
             label12.Text = "Detalles de Transacciones";
-            label12.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // panel1
-            // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel1.Controls.Add(label7);
-            panel1.Controls.Add(label6);
-            panel1.Controls.Add(label8);
-            panel1.Controls.Add(label9);
-            panel1.Controls.Add(label10);
-            panel1.Controls.Add(label11);
-            panel1.Location = new Point(113, 389);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(610, 88);
-            panel1.TabIndex = 40;
-            // 
-            // label7
-            // 
-            label7.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.ForeColor = Color.FromArgb(150, 102, 102);
-            label7.Location = new Point(3, 42);
-            label7.Name = "label7";
-            label7.Size = new Size(99, 25);
-            label7.TabIndex = 40;
-            label7.Text = "$ 500.000";
-            // 
-            // label6
-            // 
-            label6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.ForeColor = SystemColors.ControlDarkDark;
-            label6.Location = new Point(3, 21);
-            label6.Name = "label6";
-            label6.Size = new Size(77, 15);
-            label6.TabIndex = 41;
-            label6.Text = "Total Ventas:";
-            // 
-            // label8
-            // 
-            label8.Anchor = AnchorStyles.None;
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.ForeColor = Color.FromArgb(120, 82, 82);
-            label8.Location = new Point(256, 44);
-            label8.Name = "label8";
-            label8.Size = new Size(99, 25);
-            label8.TabIndex = 42;
-            label8.Text = "$ 500.000";
-            // 
-            // label9
-            // 
-            label9.Anchor = AnchorStyles.None;
-            label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.ForeColor = SystemColors.ControlDarkDark;
-            label9.Location = new Point(251, 23);
-            label9.Name = "label9";
-            label9.Size = new Size(114, 15);
-            label9.TabIndex = 43;
-            label9.Text = "Total Reparaciones:";
-            // 
-            // label10
-            // 
-            label10.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label10.ForeColor = Color.FromArgb(100, 62, 62);
-            label10.Location = new Point(477, 42);
-            label10.Name = "label10";
-            label10.Size = new Size(115, 25);
-            label10.TabIndex = 44;
-            label10.Text = "$ 1.000.000";
-            // 
-            // label11
-            // 
-            label11.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label11.ForeColor = SystemColors.ControlDarkDark;
-            label11.Location = new Point(508, 23);
-            label11.Name = "label11";
-            label11.Size = new Size(84, 15);
-            label11.TabIndex = 45;
-            label11.Text = "Total General:";
             // 
             // Reportes
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(236, 240, 241);
             ClientSize = new Size(827, 637);
-            Controls.Add(panel1);
-            Controls.Add(dataGridView1);
-            Controls.Add(label12);
-            Controls.Add(button2);
-            Controls.Add(button1);
-            Controls.Add(dateTimePicker2);
-            Controls.Add(label5);
-            Controls.Add(dateTimePicker1);
-            Controls.Add(label3);
-            Controls.Add(comboBox1);
-            Controls.Add(label4);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Controls.Add(panelGrid);
+            Controls.Add(panelStats);
+            Controls.Add(panelConfig);
+            Controls.Add(panelHeader);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
-            MinimizeBox = false;
             Name = "Reportes";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Reportes";
+            Text = "Sistema de Reportes";
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelConfig.ResumeLayout(false);
+            panelStats.ResumeLayout(false);
+            panelStats.PerformLayout();
+            panelGrid.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Label label1;
+        private Panel panelHeader;
+        private Label lblTitle;
+        private Label lblSubtitle;
+        private Panel panelConfig;
         private Button button2;
         private Button button1;
         private DateTimePicker dateTimePicker2;
@@ -339,18 +388,19 @@
         private ComboBox comboBox1;
         private Label label4;
         private Label label2;
-        private DataGridView dataGridView1;
-        private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn Column2;
-        private DataGridViewTextBoxColumn Column3;
-        private DataGridViewTextBoxColumn Column4;
-        private Label label12;
-        private Panel panel1;
+        private Panel panelStats;
         private Label label7;
         private Label label6;
         private Label label8;
         private Label label9;
         private Label label10;
         private Label label11;
+        private Panel panelGrid;
+        private DataGridView dataGridView1;
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column3;
+        private DataGridViewTextBoxColumn Column4;
+        private Label label12;
     }
 }

@@ -8,9 +8,12 @@ namespace Gestor_Tecnico
 {
     public partial class PantallaPrincipal : Form
     {
+        private ConexionSQL conexionSQL;
+
         public PantallaPrincipal()
         {
             InitializeComponent();
+            conexionSQL = new ConexionSQL();
             dgvStock.AllowUserToAddRows = false;
             this.Load += PantallaPrincipal_Load;
             dgvStock.CellPainting += dgvStock_CellPainting;
@@ -27,12 +30,12 @@ namespace Gestor_Tecnico
         {
             dgvStock.Rows.Clear();
 
-            string conexion = "Server=DESKTOP-JJJUFEH\\SQLEXPRESS02;Database=Gestor_Tecnico;Integrated Security=true;";
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(conexion))
+                using (SqlConnection conn = conexionSQL.ObtenerConexion())
                 {
+                    if (conn == null) return;
+
                     string query = @"
                         SELECT p.idProducto, p.Nombre, p.Modelo, t.Descripcion AS Tipo, p.Stock, p.PrecioVenta
                         FROM Producto p
@@ -47,8 +50,6 @@ namespace Gestor_Tecnico
 
                     if (!string.IsNullOrWhiteSpace(filtro))
                         cmd.Parameters.AddWithValue("@Filtro", "%" + filtro + "%");
-
-                    conn.Open();
 
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
@@ -111,7 +112,7 @@ namespace Gestor_Tecnico
                     int stock = int.Parse(dgvStock.Rows[e.RowIndex].Cells["colStock"].Value.ToString());
 
                     EditarProducto formEditar = new EditarProducto(idProducto, nombre, modelo, tipo, precio, stock);
-                    formEditar.ProductoEditado += (s, args) => CargarProductos(); // sin filtro
+                    formEditar.ProductoEditado += (s, args) => CargarProductos();
                     formEditar.ShowDialog();
                 }
                 else if (x >= anchoBoton + 2 * separacion && x <= anchoBoton * 2 + 2 * separacion)
@@ -127,7 +128,7 @@ namespace Gestor_Tecnico
                     if (confirm == DialogResult.Yes)
                     {
                         EliminarProducto(idProducto);
-                        CargarProductos(); // sin filtro
+                        CargarProductos();
                     }
                 }
             }
@@ -135,12 +136,12 @@ namespace Gestor_Tecnico
 
         private void EliminarProducto(int idProducto)
         {
-            string conexion = "Server=DESKTOP-JJJUFEH\\SQLEXPRESS02;Database=Gestor_Tecnico;Integrated Security=true;";
             try
             {
-                using (SqlConnection conn = new SqlConnection(conexion))
+                using (SqlConnection conn = conexionSQL.ObtenerConexion())
                 {
-                    conn.Open();
+                    if (conn == null) return;
+
                     string query = "DELETE FROM Producto WHERE idProducto = @Id";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -165,7 +166,7 @@ namespace Gestor_Tecnico
         {
             AgregarProducto formulario = new AgregarProducto();
             formulario.ShowDialog();
-            CargarProductos(); // sin filtro
+            CargarProductos();
         }
     }
 }
