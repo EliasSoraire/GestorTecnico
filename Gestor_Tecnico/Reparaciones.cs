@@ -374,5 +374,11 @@ namespace Gestor_Tecnico
         {
             CargarReparacionesEnDGV();
         }
+
+        private void btnVerPagos_Click(object sender, EventArgs e)
+        {
+            PagosReparaciones pagosReparaciones = new PagosReparaciones();
+            pagosReparaciones.ShowDialog();
+        }
     }
 }

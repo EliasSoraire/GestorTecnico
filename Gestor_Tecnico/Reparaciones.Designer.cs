@@ -508,9 +508,19 @@
             panelFilters.Size = new Size(1134, 40);
             panelFilters.TabIndex = 103;
             // 
+            // btnVerPagos
+            // 
+            btnVerPagos.Location = new Point(64, 462);
+            btnVerPagos.Name = "btnVerPagos";
+            btnVerPagos.Size = new Size(150, 44);
+            btnVerPagos.TabIndex = 57;
+            btnVerPagos.Text = "Ver Pagos";
+            btnVerPagos.UseVisualStyleBackColor = true;
+            btnVerPagos.Click += btnVerPagos_Click;
+            // 
             // Reparaciones
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(250, 251, 252);
             ClientSize = new Size(1184, 749);
@@ -572,5 +582,6 @@
         private DataGridViewTextBoxColumn colFechaIngreso;
         private DataGridViewTextBoxColumn colFechaEntrega;
         private DataGridViewButtonColumn colAcciones;
+        private Button btnVerPagos;
     }
 }
