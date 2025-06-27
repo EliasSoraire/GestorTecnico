@@ -1,32 +1,30 @@
-# FASE 3 - FUNCIONES DE NEGOCIO (3 DIAS)
+# FASE 4 - PDFs, fotos y reportes (3 DIAS)
 
-# OBJETIVO: Implementar ventas, pagos y entregas
+# OBJETIVO: Completar funciones visuales y administrativas para la entrega
 
-# | ELIAS | Ventas: Carrito, stock y medios de pago
+# | ELIAS | PDF de reparacion
 
-    - Formulario donde se agregan productos a un carrito
-    - Seleccion de cantidad por producto
-    - Calculo del total en tiempo real
-    - Seleccion de medio de pago
-    - Al confirmar, registar venta y descontar stock automaticamente
-    - Validar que no se venda mas de lo que hay en stock
+    - Generar PDF con: nombre del cliente, equipo, problema, precio estimado, medio de pago y fecha
+    - Incluir logo del negocio y diseño presentable
+    - Guardar el PDF automaticamente con nombre identificable
+    - El PDF tiene que ser similar al que paso Mariano
 
-# | MATIAS | Pagos parciales en reparaciones
+# | MATIAS | PDF de venta (tipo ticket)
 
-    - Agregar boto para registra pagos sobre una reparacion
-    - Permitir cargar multiples pagos con distintos medios
-    - Mostrar total abonado y saldo restante
-    - Evitar que se pague mas del precio final
+    - Crear ticket al finalizar venta
+    - Incluir: Productos, cantidades, precios, total, medio de pago y fecha
+    - Estilo tipo recibo o ticket de caja
+    - Opcion de guardar y de imprimir 
 
-# | GASTON | Entrega de reparaciones + historial
+# | GASTON | Cargar/ver fotos + reportes PDF
 
-    - Boton para marcar reparaciones como entregadas (solo si esta totalmente pagada)
-    - Guardar fecha de entrega
-    - Crear vista de historial de reparaciones y ventas por clientes
+    - Al registrar reparacion, permitir subir una imagen del equipo
+    - Mostrar imagen al hacer click en el listado
+    - Crear reporte de ventas y reparaciones por rango de fechas
+    - Exportar reporte en PDF con totales
 
 # TESTEO
 
-    - Hacer venta con 3 productos y confirmar que el stock baje
-    - Registrar 2 pagos parciales en una reparacion y validar saldo restante
-    - Marcar como entregada una reparacion totalmente paga
-    - Ver que el historial muestre todos los datos correctamente 
+    - Probar subida y vista de imagen correctamente
+    - Verificar que los PDFs se generen bien con los datos cargados
+    - Reporte de ventas por semana debe coincidir con las ventas cargadas
