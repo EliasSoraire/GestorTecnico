@@ -168,5 +168,29 @@ namespace Gestor_Tecnico
             formulario.ShowDialog();
             CargarProductos();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Reparaciones reparaciones = new Reparaciones();
+            reparaciones.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            GestiondeVentas ventas = new GestiondeVentas();
+            ventas.ShowDialog();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            GestiondeClientes clientes = new GestiondeClientes();
+            clientes.ShowDialog();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Reportes reportes = new Reportes();
+            reportes.ShowDialog();
+        }
     }
 }

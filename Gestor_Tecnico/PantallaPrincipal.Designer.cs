@@ -61,7 +61,7 @@
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
             panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(1050, 77);
+            panelHeader.Size = new Size(1184, 77);
             panelHeader.TabIndex = 0;
             // 
             // label1
@@ -85,7 +85,7 @@
             panelNavigation.Dock = DockStyle.Left;
             panelNavigation.Location = new Point(0, 77);
             panelNavigation.Name = "panelNavigation";
-            panelNavigation.Size = new Size(192, 501);
+            panelNavigation.Size = new Size(192, 584);
             panelNavigation.TabIndex = 1;
             // 
             // button1
@@ -103,6 +103,7 @@
             button1.Text = "🔧 Reparaciones";
             button1.TextAlign = ContentAlignment.MiddleLeft;
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // button2
             // 
@@ -119,6 +120,7 @@
             button2.Text = "💰 Ventas";
             button2.TextAlign = ContentAlignment.MiddleLeft;
             button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // button3
             // 
@@ -135,6 +137,7 @@
             button3.Text = "👥 Clientes";
             button3.TextAlign = ContentAlignment.MiddleLeft;
             button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click;
             // 
             // button4
             // 
@@ -151,6 +154,7 @@
             button4.Text = "📊 Reportes";
             button4.TextAlign = ContentAlignment.MiddleLeft;
             button4.UseVisualStyleBackColor = false;
+            button4.Click += button4_Click;
             // 
             // panelContent
             // 
@@ -163,7 +167,7 @@
             panelContent.Location = new Point(192, 77);
             panelContent.Name = "panelContent";
             panelContent.Padding = new Padding(18, 17, 18, 17);
-            panelContent.Size = new Size(858, 501);
+            panelContent.Size = new Size(992, 584);
             panelContent.TabIndex = 2;
             // 
             // label2
@@ -197,7 +201,7 @@
             txtBuscarProducto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             txtBuscarProducto.Font = new Font("Segoe UI", 10F);
             txtBuscarProducto.ForeColor = Color.FromArgb(108, 117, 125);
-            txtBuscarProducto.Location = new Point(639, 64);
+            txtBuscarProducto.Location = new Point(773, 64);
             txtBuscarProducto.Name = "txtBuscarProducto";
             txtBuscarProducto.PlaceholderText = "Buscar Producto...";
             txtBuscarProducto.Size = new Size(202, 25);
@@ -231,7 +235,7 @@
             dgvStock.Name = "dgvStock";
             dgvStock.RowHeadersVisible = false;
             dgvStock.RowHeadersWidth = 51;
-            dgvStock.Size = new Size(822, 373);
+            dgvStock.Size = new Size(956, 456);
             dgvStock.TabIndex = 3;
             // 
             // colNombre
@@ -282,7 +286,7 @@
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(236, 240, 241);
-            ClientSize = new Size(1050, 578);
+            ClientSize = new Size(1184, 661);
             Controls.Add(panelContent);
             Controls.Add(panelNavigation);
             Controls.Add(panelHeader);

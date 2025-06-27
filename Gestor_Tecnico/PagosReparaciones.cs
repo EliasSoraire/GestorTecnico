@@ -9,10 +9,12 @@ namespace Gestor_Tecnico
     {
         private int reparacionSeleccionadaId = -1;
         private decimal saldoRestante = 0;
+        private ConexionSQL conexionSQL;
 
         public PagosReparaciones()
         {
             InitializeComponent();
+            conexionSQL = new ConexionSQL();
             this.Load += PagosReparaciones_Load;
             dgvReparaciones.CellContentClick += dgvReparaciones_CellContentClick;
             btnRegistrarPago.Click += btnRegistrarPago_Click;
@@ -27,7 +29,6 @@ namespace Gestor_Tecnico
         private void CargarReparacionesImpagas()
         {
             dgvReparaciones.Rows.Clear();
-            string conexion = "Server=DESKTOP-JJJUFEH\\SQLEXPRESS02;Database=Gestor_Tecnico;Integrated Security=true;";
 
             string query = @"
                 SELECT 
@@ -44,38 +45,43 @@ namespace Gestor_Tecnico
                 GROUP BY r.idReparacion, c.Nombre, c.Apellido, te.Descripcion, r.MontoTotal
                 HAVING r.MontoTotal - ISNULL(SUM(pr.Monto), 0) > 0";
 
-            using (SqlConnection conn = new SqlConnection(conexion))
-            using (SqlCommand cmd = new SqlCommand(query, conn))
+            using (SqlConnection conn = conexionSQL.ObtenerConexion())
             {
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                if (conn != null)
                 {
-                    int rowIndex = dgvReparaciones.Rows.Add();
-                    dgvReparaciones.Rows[rowIndex].Cells["colCliente"].Value = reader["Cliente"].ToString();
-                    dgvReparaciones.Rows[rowIndex].Cells["colEquipo"].Value = reader["Equipo"].ToString();
-                    dgvReparaciones.Rows[rowIndex].Cells["colPrecioTotal"].Value = reader["MontoTotal"].ToString();
-                    dgvReparaciones.Rows[rowIndex].Cells["colTotalPagado"].Value = reader["TotalPagado"].ToString();
-                    dgvReparaciones.Rows[rowIndex].Cells["colSaldoRestante"].Value = reader["SaldoRestante"].ToString();
-                    dgvReparaciones.Rows[rowIndex].Tag = reader["idReparacion"];
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            int rowIndex = dgvReparaciones.Rows.Add();
+                            dgvReparaciones.Rows[rowIndex].Cells["colCliente"].Value = reader["Cliente"].ToString();
+                            dgvReparaciones.Rows[rowIndex].Cells["colEquipo"].Value = reader["Equipo"].ToString();
+                            dgvReparaciones.Rows[rowIndex].Cells["colPrecioTotal"].Value = reader["MontoTotal"].ToString();
+                            dgvReparaciones.Rows[rowIndex].Cells["colTotalPagado"].Value = reader["TotalPagado"].ToString();
+                            dgvReparaciones.Rows[rowIndex].Cells["colSaldoRestante"].Value = reader["SaldoRestante"].ToString();
+                            dgvReparaciones.Rows[rowIndex].Tag = reader["idReparacion"];
+                        }
+                    }
                 }
             }
         }
 
         private void CargarMediosPago()
         {
-            string conexion = "Server=DESKTOP-JJJUFEH\\SQLEXPRESS02;Database=Gestor_Tecnico;Integrated Security=true;";
-            using (SqlConnection conn = new SqlConnection(conexion))
+            using (SqlConnection conn = conexionSQL.ObtenerConexion())
             {
-                conn.Open();
-                string query = "SELECT idMedioPago, Descripcion FROM MediosPago";
-                SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
+                if (conn != null)
+                {
+                    string query = "SELECT idMedioPago, Descripcion FROM MediosPago";
+                    SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
 
-                cmbMedioPago.DisplayMember = "Descripcion";
-                cmbMedioPago.ValueMember = "idMedioPago";
-                cmbMedioPago.DataSource = dt;
+                    cmbMedioPago.DisplayMember = "Descripcion";
+                    cmbMedioPago.ValueMember = "idMedioPago";
+                    cmbMedioPago.DataSource = dt;
+                }
             }
         }
 
@@ -131,20 +137,21 @@ namespace Gestor_Tecnico
 
             int medioPagoId = Convert.ToInt32(((DataRowView)cmbMedioPago.SelectedItem)["idMedioPago"]);
 
-            string conexion = "Server=DESKTOP-JJJUFEH\\SQLEXPRESS02;Database=Gestor_Tecnico;Integrated Security=true;";
-            using (SqlConnection conn = new SqlConnection(conexion))
+            using (SqlConnection conn = conexionSQL.ObtenerConexion())
             {
-                conn.Open();
-                string query = "INSERT INTO PagosReparacion (idReparacion, idMedioPago, Monto, FechaPago) VALUES (@idReparacion, @idMedioPago, @Monto, @FechaPago)";
-
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                if (conn != null)
                 {
-                    cmd.Parameters.AddWithValue("@idReparacion", reparacionSeleccionadaId);
-                    cmd.Parameters.AddWithValue("@idMedioPago", medioPagoId);
-                    cmd.Parameters.AddWithValue("@Monto", monto);
-                    cmd.Parameters.AddWithValue("@FechaPago", DateTime.Now);
+                    string query = "INSERT INTO PagosReparacion (idReparacion, idMedioPago, Monto, FechaPago) VALUES (@idReparacion, @idMedioPago, @Monto, @FechaPago)";
 
-                    cmd.ExecuteNonQuery();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@idReparacion", reparacionSeleccionadaId);
+                        cmd.Parameters.AddWithValue("@idMedioPago", medioPagoId);
+                        cmd.Parameters.AddWithValue("@Monto", monto);
+                        cmd.Parameters.AddWithValue("@FechaPago", DateTime.Now);
+
+                        cmd.ExecuteNonQuery();
+                    }
                 }
             }
 

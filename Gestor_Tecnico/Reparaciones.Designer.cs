@@ -17,9 +17,9 @@
 
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             label1 = new Label();
             btnGenerarPDF = new Button();
             btnGuardarReparacion = new Button();
@@ -85,7 +85,7 @@
             btnGenerarPDF.FlatStyle = FlatStyle.Flat;
             btnGenerarPDF.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnGenerarPDF.ForeColor = Color.White;
-            btnGenerarPDF.Location = new Point(409, 256);
+            btnGenerarPDF.Location = new Point(410, 275);
             btnGenerarPDF.Name = "btnGenerarPDF";
             btnGenerarPDF.Size = new Size(320, 40);
             btnGenerarPDF.TabIndex = 41;
@@ -100,7 +100,7 @@
             btnGuardarReparacion.FlatStyle = FlatStyle.Flat;
             btnGuardarReparacion.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnGuardarReparacion.ForeColor = Color.White;
-            btnGuardarReparacion.Location = new Point(760, 256);
+            btnGuardarReparacion.Location = new Point(760, 275);
             btnGuardarReparacion.Name = "btnGuardarReparacion";
             btnGuardarReparacion.Size = new Size(320, 40);
             btnGuardarReparacion.TabIndex = 40;
@@ -112,7 +112,7 @@
             // 
             dtpFechaIngreso.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             dtpFechaIngreso.Font = new Font("Segoe UI", 10F);
-            dtpFechaIngreso.Location = new Point(748, 70);
+            dtpFechaIngreso.Location = new Point(748, 80);
             dtpFechaIngreso.Name = "dtpFechaIngreso";
             dtpFechaIngreso.Size = new Size(320, 25);
             dtpFechaIngreso.TabIndex = 39;
@@ -134,7 +134,7 @@
             txtPresupuesto.BorderStyle = BorderStyle.FixedSingle;
             txtPresupuesto.Font = new Font("Segoe UI", 10F);
             txtPresupuesto.ForeColor = Color.FromArgb(47, 54, 64);
-            txtPresupuesto.Location = new Point(370, 120);
+            txtPresupuesto.Location = new Point(370, 140);
             txtPresupuesto.Multiline = true;
             txtPresupuesto.Name = "txtPresupuesto";
             txtPresupuesto.Size = new Size(320, 35);
@@ -145,7 +145,7 @@
             // 
             label7.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label7.ForeColor = Color.FromArgb(99, 110, 125);
-            label7.Location = new Point(25, 165);
+            label7.Location = new Point(25, 190);
             label7.Name = "label7";
             label7.Size = new Size(150, 15);
             label7.TabIndex = 33;
@@ -155,7 +155,7 @@
             // 
             label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label6.ForeColor = Color.FromArgb(99, 110, 125);
-            label6.Location = new Point(370, 100);
+            label6.Location = new Point(370, 110);
             label6.Name = "label6";
             label6.Size = new Size(150, 15);
             label6.TabIndex = 31;
@@ -167,7 +167,7 @@
             txtDescripcion.BorderStyle = BorderStyle.FixedSingle;
             txtDescripcion.Font = new Font("Segoe UI", 10F);
             txtDescripcion.ForeColor = Color.FromArgb(47, 54, 64);
-            txtDescripcion.Location = new Point(25, 120);
+            txtDescripcion.Location = new Point(25, 140);
             txtDescripcion.Multiline = true;
             txtDescripcion.Name = "txtDescripcion";
             txtDescripcion.Size = new Size(320, 35);
@@ -177,7 +177,7 @@
             // 
             label5.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label5.ForeColor = Color.FromArgb(99, 110, 125);
-            label5.Location = new Point(25, 100);
+            label5.Location = new Point(25, 110);
             label5.Name = "label5";
             label5.Size = new Size(150, 15);
             label5.TabIndex = 29;
@@ -189,7 +189,7 @@
             txtModelo.BorderStyle = BorderStyle.FixedSingle;
             txtModelo.Font = new Font("Segoe UI", 10F);
             txtModelo.ForeColor = Color.FromArgb(47, 54, 64);
-            txtModelo.Location = new Point(370, 70);
+            txtModelo.Location = new Point(370, 80);
             txtModelo.Multiline = true;
             txtModelo.Name = "txtModelo";
             txtModelo.Size = new Size(320, 25);
@@ -212,7 +212,7 @@
             cbTipoEquipo.Font = new Font("Segoe UI", 10F);
             cbTipoEquipo.ForeColor = Color.FromArgb(47, 54, 64);
             cbTipoEquipo.FormattingEnabled = true;
-            cbTipoEquipo.Location = new Point(25, 70);
+            cbTipoEquipo.Location = new Point(25, 80);
             cbTipoEquipo.Name = "cbTipoEquipo";
             cbTipoEquipo.Size = new Size(320, 25);
             cbTipoEquipo.TabIndex = 26;
@@ -241,29 +241,29 @@
             // dgvReparaciones
             // 
             dgvReparaciones.AllowUserToAddRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(248, 249, 250);
-            dgvReparaciones.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(248, 249, 250);
+            dgvReparaciones.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             dgvReparaciones.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvReparaciones.BackgroundColor = Color.White;
             dgvReparaciones.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(47, 54, 64);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(47, 54, 64);
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dgvReparaciones.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(47, 54, 64);
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle5.ForeColor = Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(47, 54, 64);
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dgvReparaciones.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dgvReparaciones.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvReparaciones.Columns.AddRange(new DataGridViewColumn[] { colIdReparacion, colEstado, colNombre, colTipo, colModelo, colFechaIngreso, colFechaEntrega, colAcciones });
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.White;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle3.ForeColor = Color.FromArgb(47, 54, 64);
-            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(225, 239, 254);
-            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(47, 54, 64);
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            dgvReparaciones.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.White;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle6.ForeColor = Color.FromArgb(47, 54, 64);
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(225, 239, 254);
+            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(47, 54, 64);
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            dgvReparaciones.DefaultCellStyle = dataGridViewCellStyle6;
             dgvReparaciones.EnableHeadersVisualStyles = false;
             dgvReparaciones.GridColor = Color.FromArgb(225, 232, 240);
             dgvReparaciones.Location = new Point(25, 95);
@@ -388,7 +388,7 @@
             // 
             label10.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label10.ForeColor = Color.FromArgb(99, 110, 125);
-            label10.Location = new Point(370, 165);
+            label10.Location = new Point(370, 190);
             label10.Name = "label10";
             label10.Size = new Size(150, 15);
             label10.TabIndex = 50;
@@ -401,7 +401,7 @@
             cbMedioPago.Font = new Font("Segoe UI", 10F);
             cbMedioPago.ForeColor = Color.FromArgb(47, 54, 64);
             cbMedioPago.FormattingEnabled = true;
-            cbMedioPago.Location = new Point(370, 185);
+            cbMedioPago.Location = new Point(370, 210);
             cbMedioPago.Name = "cbMedioPago";
             cbMedioPago.Size = new Size(320, 25);
             cbMedioPago.TabIndex = 51;
@@ -410,7 +410,7 @@
             // 
             label8.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label8.ForeColor = Color.FromArgb(99, 110, 125);
-            label8.Location = new Point(25, 241);
+            label8.Location = new Point(25, 250);
             label8.Name = "label8";
             label8.Size = new Size(150, 15);
             label8.TabIndex = 52;
@@ -424,7 +424,7 @@
             btnImagen.FlatStyle = FlatStyle.Flat;
             btnImagen.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnImagen.ForeColor = Color.White;
-            btnImagen.Location = new Point(25, 261);
+            btnImagen.Location = new Point(25, 280);
             btnImagen.Name = "btnImagen";
             btnImagen.Size = new Size(360, 35);
             btnImagen.TabIndex = 53;
@@ -439,7 +439,7 @@
             cbDniCliente.Font = new Font("Segoe UI", 10F);
             cbDniCliente.ForeColor = Color.FromArgb(47, 54, 64);
             cbDniCliente.FormattingEnabled = true;
-            cbDniCliente.Location = new Point(25, 185);
+            cbDniCliente.Location = new Point(25, 210);
             cbDniCliente.Name = "cbDniCliente";
             cbDniCliente.Size = new Size(320, 25);
             cbDniCliente.TabIndex = 54;
@@ -508,19 +508,9 @@
             panelFilters.Size = new Size(1134, 40);
             panelFilters.TabIndex = 103;
             // 
-            // btnVerPagos
-            // 
-            btnVerPagos.Location = new Point(64, 462);
-            btnVerPagos.Name = "btnVerPagos";
-            btnVerPagos.Size = new Size(150, 44);
-            btnVerPagos.TabIndex = 57;
-            btnVerPagos.Text = "Ver Pagos";
-            btnVerPagos.UseVisualStyleBackColor = true;
-            btnVerPagos.Click += btnVerPagos_Click;
-            // 
             // Reparaciones
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(250, 251, 252);
             ClientSize = new Size(1184, 749);
