@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+
 
 namespace Gestor_Tecnico
 {
@@ -332,67 +335,242 @@ namespace Gestor_Tecnico
             }
         }
 
+        // ... [todo el código previo queda igual hasta ProcesarVenta()]
+
         private void ProcesarVenta()
         {
             SqlTransaction transaction = null;
+            SqlConnection conexion = null;
+
+            try
+            {
+                conexion = conexionSQL.ObtenerConexion();
+                if (conexion != null)
+                {
+                    transaction = conexion.BeginTransaction();
+
+                    string queryVenta = @"INSERT INTO Ventas (FechaVenta, idMedioPago, MontoTotal) 
+                            OUTPUT INSERTED.idVenta 
+                            VALUES (@FechaVenta, @idMedioPago, @MontoTotal)";
+
+                    SqlCommand cmdVenta = new SqlCommand(queryVenta, conexion, transaction);
+                    cmdVenta.Parameters.AddWithValue("@FechaVenta", DateTime.Now);
+                    cmdVenta.Parameters.AddWithValue("@idMedioPago", ((dynamic)cmbMetodoPago.SelectedItem).idMedioPago);
+                    cmdVenta.Parameters.AddWithValue("@MontoTotal", totalVenta);
+
+                    int idVenta = (int)cmdVenta.ExecuteScalar();
+
+                    foreach (var producto in carrito)
+                    {
+                        string queryDetalle = @"INSERT INTO DetalleVenta (idVenta, idProducto, Cantidad, PrecioUnitario, SubTotal) 
+                               VALUES (@idVenta, @idProducto, @Cantidad, @PrecioUnitario, @SubTotal)";
+
+                        SqlCommand cmdDetalle = new SqlCommand(queryDetalle, conexion, transaction);
+                        cmdDetalle.Parameters.AddWithValue("@idVenta", idVenta);
+                        cmdDetalle.Parameters.AddWithValue("@idProducto", producto.IdProducto);
+                        cmdDetalle.Parameters.AddWithValue("@Cantidad", producto.Cantidad);
+                        cmdDetalle.Parameters.AddWithValue("@PrecioUnitario", producto.PrecioUnitario);
+                        cmdDetalle.Parameters.AddWithValue("@SubTotal", producto.Subtotal);
+                        cmdDetalle.ExecuteNonQuery();
+
+                        string queryStock = "UPDATE Producto SET Stock = Stock - @Cantidad WHERE idProducto = @idProducto";
+                        SqlCommand cmdStock = new SqlCommand(queryStock, conexion, transaction);
+                        cmdStock.Parameters.AddWithValue("@Cantidad", producto.Cantidad);
+                        cmdStock.Parameters.AddWithValue("@idProducto", producto.IdProducto);
+                        cmdStock.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+
+                    // IMPORTANTE: Cerrar la conexión antes de generar el ticket
+                    conexion.Close();
+                    conexion.Dispose();
+
+                    var resultado = MessageBox.Show($"Venta registrada exitosamente.\nNúmero de venta: {idVenta}\n\n¿Desea generar el ticket de esta venta?",
+                        "Venta Completada", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+                    if (resultado == DialogResult.Yes)
+                    {
+                        // Esperar un momento para asegurar que la conexión se cierre completamente
+                        System.Threading.Thread.Sleep(100);
+                        GenerarTicketPDF(idVenta);
+                    }
+
+                    LimpiarFormulario();
+                    CargarProductos();
+                    CargarHistorialVentas();
+                }
+            }
+            catch (Exception ex)
+            {
+                transaction?.Rollback();
+                MessageBox.Show($"Error al procesar la venta: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Asegurar que la conexión se cierre en el bloque finally
+                transaction?.Dispose();
+                conexion?.Close();
+                conexion?.Dispose();
+            }
+        }
+
+        private void GenerarTicketPDF(int idVenta)
+        {
+            try
+            {
+                DataTable ventaInfo = new DataTable();
+                DataTable detalleInfo = new DataTable();
+
+                using (SqlConnection conexion = conexionSQL.ObtenerConexion())
+                {
+                    string queryVenta = @"
+                SELECT v.FechaVenta, v.MontoTotal, m.Descripcion as MedioPago
+                FROM Ventas v
+                JOIN MediosPago m ON v.idMedioPago = m.idMedioPago
+                WHERE v.idVenta = @idVenta";
+
+                    using (SqlCommand cmd = new SqlCommand(queryVenta, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@idVenta", idVenta);
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            adapter.Fill(ventaInfo);
+                        }
+                    }
+
+                    string queryDetalles = @"
+                SELECT p.Nombre, p.Modelo, dv.Cantidad, dv.PrecioUnitario, dv.SubTotal
+                FROM DetalleVenta dv
+                JOIN Producto p ON dv.idProducto = p.idProducto
+                WHERE dv.idVenta = @idVenta";
+
+                    using (SqlCommand cmd = new SqlCommand(queryDetalles, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@idVenta", idVenta);
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            adapter.Fill(detalleInfo);
+                        }
+                    }
+                }
+
+                if (ventaInfo.Rows.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron datos de la venta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string nombreArchivo = $"Ticket_Venta_{idVenta}_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+                string rutaCompleta = Path.Combine(path, nombreArchivo);
+
+                using (var doc = new iTextSharp.text.Document())
+                {
+                    iTextSharp.text.pdf.PdfWriter.GetInstance(doc, new FileStream(rutaCompleta, FileMode.Create));
+                    doc.Open();
+
+                    for (int i = 0; i < 2; i++)
+                    {
+                        doc.Add(new Paragraph("TICKET DE VENTA") { Alignment = Element.ALIGN_CENTER });
+                        doc.Add(new Paragraph("----------------------------------------------"));
+                        doc.Add(new Paragraph($"Nº Venta: {idVenta}"));
+                        doc.Add(new Paragraph($"Fecha: {Convert.ToDateTime(ventaInfo.Rows[0]["FechaVenta"]):dd/MM/yyyy HH:mm}"));
+                        doc.Add(new Paragraph($"Medio de Pago: {ventaInfo.Rows[0]["MedioPago"]}"));
+                        doc.Add(new Paragraph(" "));
+
+                        PdfPTable tabla = new PdfPTable(4);
+                        tabla.WidthPercentage = 100;
+                        tabla.SetWidths(new float[] { 4, 1, 2, 2 });
+                        tabla.AddCell("Producto");
+                        tabla.AddCell("Cant");
+                        tabla.AddCell("Precio");
+                        tabla.AddCell("Subtotal");
+
+                        foreach (DataRow row in detalleInfo.Rows)
+                        {
+                            string nombre = row["Nombre"].ToString();
+                            string modelo = row["Modelo"].ToString();
+                            int cantidad = Convert.ToInt32(row["Cantidad"]);
+                            decimal precio = Convert.ToDecimal(row["PrecioUnitario"]);
+                            decimal subtotal = Convert.ToDecimal(row["SubTotal"]);
+
+                            tabla.AddCell($"{nombre} {modelo}");
+                            tabla.AddCell(cantidad.ToString());
+                            tabla.AddCell(precio.ToString("C2"));
+                            tabla.AddCell(subtotal.ToString("C2"));
+                        }
+
+                        doc.Add(tabla);
+                        doc.Add(new Paragraph(" "));
+                        doc.Add(new Paragraph($"TOTAL: {Convert.ToDecimal(ventaInfo.Rows[0]["MontoTotal"]):C2}"));
+                        doc.Add(new Paragraph(" "));
+                        doc.Add(new Paragraph("Gracias por su compra!") { Alignment = Element.ALIGN_CENTER });
+
+                        // Agregar línea de corte entre los tickets
+                        if (i == 0)
+                        {
+                            doc.Add(new Paragraph("\n\n-------------------------- CORTAR AQUÍ --------------------------\n\n")
+                            {
+                                Alignment = Element.ALIGN_CENTER,
+                                SpacingBefore = 10,
+                                SpacingAfter = 10
+                            });
+                        }
+                    }
+
+
+                    doc.Close();
+                }
+
+                var abrir = MessageBox.Show($"Ticket PDF generado en el escritorio:\n{nombreArchivo}\n\u00bfDesea abrirlo?", "PDF generado", MessageBoxButtons.YesNo);
+                if (abrir == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                    {
+                        FileName = rutaCompleta,
+                        UseShellExecute = true
+                    });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al generar PDF: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        // Método adicional para validar la conexión antes de usarla
+        private bool ValidarConexion()
+        {
             try
             {
                 using (SqlConnection conexion = conexionSQL.ObtenerConexion())
                 {
                     if (conexion != null)
                     {
-                        transaction = conexion.BeginTransaction();
-
-                        string queryVenta = @"INSERT INTO Ventas (FechaVenta, idMedioPago, MontoTotal) 
-                                            OUTPUT INSERTED.idVenta 
-                                            VALUES (@FechaVenta, @idMedioPago, @MontoTotal)";
-
-                        SqlCommand cmdVenta = new SqlCommand(queryVenta, conexion, transaction);
-                        cmdVenta.Parameters.AddWithValue("@FechaVenta", DateTime.Now);
-                        cmdVenta.Parameters.AddWithValue("@idMedioPago", ((dynamic)cmbMetodoPago.SelectedItem).idMedioPago);
-                        cmdVenta.Parameters.AddWithValue("@MontoTotal", totalVenta);
-
-                        int idVenta = (int)cmdVenta.ExecuteScalar();
-
-                        foreach (var producto in carrito)
+                        if (conexion.State != ConnectionState.Open)
                         {
-                            string queryDetalle = @"INSERT INTO DetalleVenta (idVenta, idProducto, Cantidad, PrecioUnitario, SubTotal) 
-                                                   VALUES (@idVenta, @idProducto, @Cantidad, @PrecioUnitario, @SubTotal)";
-
-                            SqlCommand cmdDetalle = new SqlCommand(queryDetalle, conexion, transaction);
-                            cmdDetalle.Parameters.AddWithValue("@idVenta", idVenta);
-                            cmdDetalle.Parameters.AddWithValue("@idProducto", producto.IdProducto);
-                            cmdDetalle.Parameters.AddWithValue("@Cantidad", producto.Cantidad);
-                            cmdDetalle.Parameters.AddWithValue("@PrecioUnitario", producto.PrecioUnitario);
-                            cmdDetalle.Parameters.AddWithValue("@SubTotal", producto.Subtotal);
-                            cmdDetalle.ExecuteNonQuery();
-
-                            string queryStock = "UPDATE Producto SET Stock = Stock - @Cantidad WHERE idProducto = @idProducto";
-                            SqlCommand cmdStock = new SqlCommand(queryStock, conexion, transaction);
-                            cmdStock.Parameters.AddWithValue("@Cantidad", producto.Cantidad);
-                            cmdStock.Parameters.AddWithValue("@idProducto", producto.IdProducto);
-                            cmdStock.ExecuteNonQuery();
+                            conexion.Open();
                         }
-
-                        transaction.Commit();
-
-                        MessageBox.Show($"Venta registrada exitosamente.\nNúmero de venta: {idVenta}", "Venta Completada",
-                                       MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        LimpiarFormulario();
-
-                        CargarProductos();
-                        CargarHistorialVentas();
+                        return conexion.State == ConnectionState.Open;
                     }
                 }
+                return false;
             }
-            catch (Exception ex)
+            catch
             {
-                transaction?.Rollback();
-                MessageBox.Show($"Error al procesar la venta: {ex.Message}", "Error",
-                               MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
         }
+
+
+
+
+
+
+
 
         private void LimpiarFormulario()
         {
@@ -419,4 +597,6 @@ namespace Gestor_Tecnico
         public int Cantidad { get; set; }
         public decimal Subtotal { get; set; }
     }
+
+
 }
