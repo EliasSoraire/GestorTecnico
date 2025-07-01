@@ -1,11 +1,11 @@
-﻿using System;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf; // ← AGREGAR ESTA LÍNEA
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
+using System.Diagnostics;
 using System.Globalization;
-using System.IO;
+using System.Reflection.Metadata;
 using System.Text;
-using System.Windows.Forms;
 
 namespace Gestor_Tecnico
 {
@@ -173,8 +173,7 @@ namespace Gestor_Tecnico
                 }
             }
 
-            MessageBox.Show("Reparación registrada con éxito.", "Éxito",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+            GenerarPDFReparacion(idReparacion);
 
             CargarReparacionesEnDGV();
             LimpiarFormulario();
@@ -247,20 +246,50 @@ namespace Gestor_Tecnico
 
         private void CargarFiltroEstados()
         {
-            var dt = new DataTable();
-            dt.Columns.Add("id", typeof(int));
-            dt.Columns.Add("texto", typeof(string));
-            dt.Rows.Add(0, "Todos");
-            dt.Rows.Add(1, "Pendiente");
-            dt.Rows.Add(2, "En Reparacion");
-            dt.Rows.Add(3, "Entregado");
-            dt.Rows.Add(4, "Cancelado");
-            dt.Rows.Add(5, "Arreglado");
+            try
+            {
+                var dt = new DataTable();
+                dt.Columns.Add("id", typeof(int));
+                dt.Columns.Add("texto", typeof(string));
+                dt.Rows.Add(0, "Todos");
 
-            cbEstado.DataSource = dt;
-            cbEstado.ValueMember = "id";
-            cbEstado.DisplayMember = "texto";
-            cbEstado.SelectedIndex = 0;
+                // Cargar estados reales desde la base de datos
+                using (var cn = new ConexionSQL().ObtenerConexion())
+                using (var cmd = new SqlCommand("SELECT idEstado, Descripcion FROM EstadosReparacion ORDER BY idEstado", cn))
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        dt.Rows.Add(reader["idEstado"], reader["Descripcion"]);
+                    }
+                }
+
+                cbEstado.DataSource = dt;
+                cbEstado.ValueMember = "id";
+                cbEstado.DisplayMember = "texto";
+                cbEstado.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                // Fallback a estados hardcodeados si no se puede conectar
+                var dt = new DataTable();
+                dt.Columns.Add("id", typeof(int));
+                dt.Columns.Add("texto", typeof(string));
+                dt.Rows.Add(0, "Todos");
+                dt.Rows.Add(1, "Pendiente");
+                dt.Rows.Add(2, "En Reparacion");
+                dt.Rows.Add(3, "Entregado");
+                dt.Rows.Add(4, "Cancelado");
+                dt.Rows.Add(5, "Arreglado");
+
+                cbEstado.DataSource = dt;
+                cbEstado.ValueMember = "id";
+                cbEstado.DisplayMember = "texto";
+                cbEstado.SelectedIndex = 0;
+
+                MessageBox.Show($"No se pudieron cargar los estados desde la base de datos. Usando valores por defecto.\nError: {ex.Message}",
+                                "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void CargarReparacionesEnDGV()
@@ -379,6 +408,149 @@ namespace Gestor_Tecnico
         {
             PagosReparaciones pagosReparaciones = new PagosReparaciones();
             pagosReparaciones.ShowDialog();
+        }
+
+        private void GenerarPDFReparacion(int idReparacion)
+        {
+            try
+            {
+                // Crear carpeta en Descargas si no existe
+                string carpetaDescargas = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "Comprobantes_Reparaciones");
+                if (!Directory.Exists(carpetaDescargas))
+                    Directory.CreateDirectory(carpetaDescargas);
+
+                // Obtener datos de la reparación
+                string cliente = "", equipo = "", modelo = "", problema = "", precio = "", medioPago = "", fecha = "";
+
+                using (var cn = new ConexionSQL().ObtenerConexion())
+                {
+                    string sql = @"
+                SELECT 
+                    c.Nombre + ' ' + c.Apellido AS Cliente,
+                    c.DNI,
+                    c.Telefono,
+                    te.Descripcion AS TipoEquipo,
+                    r.Modelo,
+                    r.DescripcionProblema,
+                    r.PresupuestoEstimado,
+                    mp.Descripcion AS MedioPago,
+                    r.FechaIngreso
+                FROM Reparaciones r
+                INNER JOIN Cliente c ON r.idCliente = c.idCliente
+                INNER JOIN TipoEquipo te ON r.idTipoEquipo = te.idEquipo
+                INNER JOIN PagosReparacion pr ON r.idReparacion = pr.idReparacion
+                INNER JOIN MediosPago mp ON pr.idMedioPago = mp.idMedioPago
+                WHERE r.idReparacion = @id";
+
+                    using (var cmd = new SqlCommand(sql, cn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", idReparacion);
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                cliente = reader["Cliente"].ToString();
+                                string dni = reader["DNI"].ToString();
+                                string telefono = reader["Telefono"].ToString();
+                                equipo = reader["TipoEquipo"].ToString();
+                                modelo = reader["Modelo"].ToString();
+                                problema = reader["DescripcionProblema"].ToString();
+                                precio = Convert.ToDecimal(reader["PresupuestoEstimado"]).ToString("C");
+                                medioPago = reader["MedioPago"].ToString();
+                                fecha = Convert.ToDateTime(reader["FechaIngreso"]).ToString("dd/MM/yyyy");
+
+                                cliente = $"{cliente} - DNI: {dni} - TEL: {telefono}";
+                            }
+                        }
+                    }
+                }
+
+                // Crear nombre del archivo
+                string nombreArchivo = $"Comprobante_{cliente.Split('-')[0].Trim()}_{fecha.Replace("/", "-")}_{DateTime.Now:HHmmss}.pdf";
+                string rutaCompleta = Path.Combine(carpetaDescargas, nombreArchivo);
+
+                // Crear documento PDF - USAR NOMBRE COMPLETO PARA EVITAR AMBIGÜEDAD
+                iTextSharp.text.Document documento = new iTextSharp.text.Document(PageSize.A4, 40, 40, 40, 40);
+                PdfWriter.GetInstance(documento, new FileStream(rutaCompleta, FileMode.Create));
+                documento.Open();
+
+                // Fuentes
+                var fontTitulo = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
+                var fontSubtitulo = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12);
+                var fontNormal = FontFactory.GetFont(FontFactory.HELVETICA, 10);
+                var fontPequena = FontFactory.GetFont(FontFactory.HELVETICA, 8);
+
+                // Encabezado
+                Paragraph titulo = new Paragraph("COMPROBANTE DE REPARACIÓN", fontTitulo);
+                titulo.Alignment = Element.ALIGN_CENTER;
+                documento.Add(titulo);
+
+                documento.Add(new Paragraph("\n"));
+
+                Paragraph direccion = new Paragraph("MUÑECAS 2326 TELÉFONO: 3813419715", fontSubtitulo);
+                direccion.Alignment = Element.ALIGN_CENTER;
+                documento.Add(direccion);
+
+                Paragraph horarios = new Paragraph("LUNES A VIERNES DE 9:30AM A 13:00PM Y DE 17:00PM A 21:30PM\nSÁBADOS DE 11:00AM A 21:00PM DE CORRIDO.", fontNormal);
+                horarios.Alignment = Element.ALIGN_CENTER;
+                documento.Add(horarios);
+
+                documento.Add(new Paragraph("\n"));
+                documento.Add(new Paragraph($"Fecha de ingreso: {fecha}", fontNormal));
+                documento.Add(new Paragraph("\n"));
+
+                // Datos del cliente y equipo
+                documento.Add(new Paragraph($"CLIENTE: {cliente}", fontNormal));
+                documento.Add(new Paragraph("\n"));
+                documento.Add(new Paragraph($"MARCA Y MODELO: {equipo} {modelo}", fontNormal));
+                documento.Add(new Paragraph("\n"));
+                documento.Add(new Paragraph($"FALLA DEL EQUIPO: {problema}", fontNormal));
+                documento.Add(new Paragraph("\n"));
+                documento.Add(new Paragraph($"MEDIO DE PAGO: {medioPago}", fontNormal));
+                documento.Add(new Paragraph("\n"));
+                documento.Add(new Paragraph($"TOTAL: {precio}", fontSubtitulo));
+                documento.Add(new Paragraph("\n"));
+
+                // Términos y condiciones
+                documento.Add(new Paragraph("Presupuesto de 48 hs hábiles y sujeto al dólar blue", fontSubtitulo));
+                documento.Add(new Paragraph("\n"));
+
+                string[] terminos = {
+            "1. Todo presupuesto no aceptado el cliente tendrá que pagar el costo de la revisión.",
+            "2. Toda reparación tiene garantía de 15 días continuos a partir de la fecha de entrega.",
+            "3. Después de 30 días de su fecha de ingreso, se cobrará $500 por día adicional.",
+            "4. La empresa no se hace responsable por pérdida o extravío pasando los 30 días.",
+            "5. El cliente renuncia a las leyes 26.361, 24.240, 5672, 26.951.",
+            "6. La empresa no se hace responsable de la pérdida de información o datos.",
+            "7. La empresa no responde por pérdida de SIMCARD o memoria MICRO SD.",
+            "8. No me responsabilizo por el origen de los equipos ni por pérdidas por siniestro.",
+            "9. No se aceptarán reclamos por fallas no detectadas en equipos con defectos previos.",
+            "10. El cliente está de acuerdo con los términos y condiciones."
+        };
+
+                foreach (string termino in terminos)
+                {
+                    documento.Add(new Paragraph(termino, fontPequena));
+                }
+
+                documento.Add(new Paragraph("\n\n"));
+                documento.Add(new Paragraph("FIRMA DEL CLIENTE _____________", fontPequena));
+
+                documento.Close();
+
+                // Preguntar si quiere abrir el PDF
+                var resultado = MessageBox.Show($"Reparación guardada exitosamente.\n\n¿Desea abrir el comprobante PDF?",
+                                              "Éxito", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+                if (resultado == DialogResult.Yes)
+                {
+                    Process.Start(new ProcessStartInfo(rutaCompleta) { UseShellExecute = true });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al generar PDF: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
