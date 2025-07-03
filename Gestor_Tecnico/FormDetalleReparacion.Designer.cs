@@ -49,14 +49,17 @@
             cbNuevoEstado = new ComboBox();
             lblEstadoTexto = new Label();
             gbFoto = new GroupBox();
-            lblFotoInfo = new Label();
-            pbFotoEquipo = new PictureBox();
+            pbFotoEquipo3 = new PictureBox();
+            pbFotoEquipo2 = new PictureBox();
+            pbFotoEquipo1 = new PictureBox();
             btnGuardarDet = new Button();
             btnCancelarDet = new Button();
             gbDatosGenerales.SuspendLayout();
             gbEstado.SuspendLayout();
             gbFoto.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbFotoEquipo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbFotoEquipo3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbFotoEquipo2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbFotoEquipo1).BeginInit();
             SuspendLayout();
             // 
             // lblTitulo
@@ -278,37 +281,50 @@
             // 
             // gbFoto
             // 
-            gbFoto.Controls.Add(lblFotoInfo);
-            gbFoto.Controls.Add(pbFotoEquipo);
+            gbFoto.Controls.Add(pbFotoEquipo3);
+            gbFoto.Controls.Add(pbFotoEquipo2);
+            gbFoto.Controls.Add(pbFotoEquipo1);
             gbFoto.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             gbFoto.ForeColor = Color.FromArgb(64, 64, 64);
-            gbFoto.Location = new Point(360, 285);
+            gbFoto.Location = new Point(346, 267);
             gbFoto.Name = "gbFoto";
-            gbFoto.Size = new Size(330, 110);
+            gbFoto.Size = new Size(344, 128);
             gbFoto.TabIndex = 9;
             gbFoto.TabStop = false;
             gbFoto.Text = "Foto del Equipo";
             // 
-            // lblFotoInfo
+            // pbFotoEquipo3
             // 
-            lblFotoInfo.Font = new Font("Segoe UI", 8F, FontStyle.Italic);
-            lblFotoInfo.ForeColor = Color.Gray;
-            lblFotoInfo.Location = new Point(110, 35);
-            lblFotoInfo.Name = "lblFotoInfo";
-            lblFotoInfo.Size = new Size(200, 40);
-            lblFotoInfo.TabIndex = 1;
-            lblFotoInfo.Text = "Aquí se muestra la foto\r\ncargada en Fase 4";
+            pbFotoEquipo3.BackColor = Color.White;
+            pbFotoEquipo3.BorderStyle = BorderStyle.FixedSingle;
+            pbFotoEquipo3.Location = new Point(240, 25);
+            pbFotoEquipo3.Name = "pbFotoEquipo3";
+            pbFotoEquipo3.Size = new Size(94, 93);
+            pbFotoEquipo3.SizeMode = PictureBoxSizeMode.Zoom;
+            pbFotoEquipo3.TabIndex = 3;
+            pbFotoEquipo3.TabStop = false;
             // 
-            // pbFotoEquipo
+            // pbFotoEquipo2
             // 
-            pbFotoEquipo.BackColor = Color.White;
-            pbFotoEquipo.BorderStyle = BorderStyle.FixedSingle;
-            pbFotoEquipo.Location = new Point(15, 25);
-            pbFotoEquipo.Name = "pbFotoEquipo";
-            pbFotoEquipo.Size = new Size(80, 60);
-            pbFotoEquipo.SizeMode = PictureBoxSizeMode.Zoom;
-            pbFotoEquipo.TabIndex = 0;
-            pbFotoEquipo.TabStop = false;
+            pbFotoEquipo2.BackColor = Color.White;
+            pbFotoEquipo2.BorderStyle = BorderStyle.FixedSingle;
+            pbFotoEquipo2.Location = new Point(125, 25);
+            pbFotoEquipo2.Name = "pbFotoEquipo2";
+            pbFotoEquipo2.Size = new Size(94, 93);
+            pbFotoEquipo2.SizeMode = PictureBoxSizeMode.Zoom;
+            pbFotoEquipo2.TabIndex = 2;
+            pbFotoEquipo2.TabStop = false;
+            // 
+            // pbFotoEquipo1
+            // 
+            pbFotoEquipo1.BackColor = Color.White;
+            pbFotoEquipo1.BorderStyle = BorderStyle.FixedSingle;
+            pbFotoEquipo1.Location = new Point(10, 25);
+            pbFotoEquipo1.Name = "pbFotoEquipo1";
+            pbFotoEquipo1.Size = new Size(96, 93);
+            pbFotoEquipo1.SizeMode = PictureBoxSizeMode.Zoom;
+            pbFotoEquipo1.TabIndex = 0;
+            pbFotoEquipo1.TabStop = false;
             // 
             // btnGuardarDet
             // 
@@ -373,7 +389,9 @@
             gbEstado.ResumeLayout(false);
             gbEstado.PerformLayout();
             gbFoto.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pbFotoEquipo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbFotoEquipo3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbFotoEquipo2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbFotoEquipo1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -400,10 +418,11 @@
         private GroupBox gbDatosGenerales;
         private GroupBox gbEstado;
         private GroupBox gbFoto;
-        private PictureBox pbFotoEquipo;
+        private PictureBox pbFotoEquipo1;
         private Label lblModelo;
         private Label lblValidacionEstado;
         private Label lblEstadoTexto;
-        private Label lblFotoInfo;
+        private PictureBox pbFotoEquipo3;
+        private PictureBox pbFotoEquipo2;
     }
 }

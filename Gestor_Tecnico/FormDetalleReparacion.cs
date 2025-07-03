@@ -10,7 +10,6 @@ namespace Gestor_Tecnico
     {
         public event Action<int, string> EstadoActualizado;
         private readonly int _idRep;
-
         public FormDetalleReparacion(int idReparacion)
         {
             InitializeComponent();
@@ -60,23 +59,26 @@ namespace Gestor_Tecnico
         {
             const string sql = @"
 SELECT
-    r.idEstado,                        -- id numérico
-    er.Descripcion       AS EstadoActual,
+    r.idEstado,
+    er.Descripcion          AS EstadoActual,
     r.Modelo,
-    r.DescripcionProblema AS Descripcion,
-    r.PresupuestoEstimado AS Presupuesto,
+    r.DescripcionProblema   AS Descripcion,
+    r.PresupuestoEstimado   AS Presupuesto,
     r.FechaIngreso,
     r.FechaEntrega,
     c.Nombre,
     c.Apellido,
     c.DNI,
-    mp.Descripcion        AS MedioPago
+    mp.Descripcion          AS MedioPago,
+    fr.RutaFoto             AS RutaFoto       
 FROM Reparaciones r
-JOIN Cliente            c  ON c.idCliente      = r.idCliente
-JOIN EstadosReparacion  er ON er.idEstado      = r.idEstado
+JOIN Cliente             c  ON c.idCliente      = r.idCliente
+JOIN EstadosReparacion   er ON er.idEstado      = r.idEstado
 LEFT JOIN PagosReparacion pr ON pr.idReparacion = r.idReparacion
-LEFT JOIN MediosPago       mp ON mp.idMedioPago  = pr.idMedioPago
-WHERE r.idReparacion = @id;";
+LEFT JOIN MediosPago      mp ON mp.idMedioPago  = pr.idMedioPago
+LEFT JOIN FotosReparaciones fr ON fr.idReparacion = r.idReparacion
+WHERE r.idReparacion = @id;
+";
 
             try
             {
@@ -85,7 +87,43 @@ WHERE r.idReparacion = @id;";
                 cmd.Parameters.AddWithValue("@id", _idRep);
 
                 using var rd = cmd.ExecuteReader();
-                if (!rd.Read())
+
+                // Variables para datos únicos (se repiten en cada fila)
+                string? nombre = null, apellido = null, dni = null, modelo = null,
+                        descripcion = null, medioPago = null;
+                DateTime? fechaIngreso = null;
+                decimal? presupuesto = null;
+                int idEstado = 0;
+
+                // Lista para almacenar rutas únicas
+                List<string> rutasFotos = new();
+
+                while (rd.Read())
+                {
+                    if (nombre == null) // solo en la primera iteración
+                    {
+                        nombre = rd["Nombre"]?.ToString() ?? "";
+                        apellido = rd["Apellido"]?.ToString() ?? "";
+                        dni = rd["DNI"]?.ToString() ?? "";
+                        modelo = rd["Modelo"]?.ToString() ?? "";
+                        descripcion = rd["Descripcion"]?.ToString() ?? "";
+                        medioPago = rd["MedioPago"] != DBNull.Value ? rd["MedioPago"].ToString() : "Sin pago";
+                        fechaIngreso = rd["FechaIngreso"] != DBNull.Value ? Convert.ToDateTime(rd["FechaIngreso"]) : null;
+                        presupuesto = rd["Presupuesto"] != DBNull.Value ? Convert.ToDecimal(rd["Presupuesto"]) : null;
+                        idEstado = rd["idEstado"] != DBNull.Value ? Convert.ToInt32(rd["idEstado"]) : 0;
+                    }
+
+                    if (rd["RutaFoto"] != DBNull.Value)
+                    {
+                        string? nombreArchivo = rd["RutaFoto"]?.ToString();
+                        if (!string.IsNullOrWhiteSpace(nombreArchivo))
+                        {
+                            rutasFotos.Add(nombreArchivo);
+                        }
+                    }
+                }
+
+                if (nombre == null)
                 {
                     MessageBox.Show("No se encontraron datos para esta reparación.",
                                     "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -93,25 +131,35 @@ WHERE r.idReparacion = @id;";
                     return;
                 }
 
-                // ------- mapeo a controles (igual que antes) -------
-                string nombre = rd["Nombre"]?.ToString() ?? "";
-                string apellido = rd["Apellido"]?.ToString() ?? "";
+                // Asignar datos a los controles
                 lblClienteValor.Text = $"{nombre} {apellido}".Trim();
+                lblDniValor.Text = dni;
+                lblFechaValor.Text = fechaIngreso?.ToString("dd/MM/yyyy") ?? "";
+                lblMedioPago.Text = medioPago;
+                txtModeloDet.Text = modelo;
+                txtDescripcionDet.Text = descripcion;
+                txtPresupuestoDet.Text = presupuesto?.ToString("F2") ?? "";
+                cbNuevoEstado.SelectedValue = idEstado;
 
-                lblDniValor.Text = rd["DNI"]?.ToString() ?? "";
-                lblFechaValor.Text = rd["FechaIngreso"] != DBNull.Value
-                                     ? Convert.ToDateTime(rd["FechaIngreso"]).ToString("dd/MM/yyyy")
-                                     : "";
-                lblMedioPago.Text = rd["MedioPago"] != DBNull.Value
-                                     ? rd["MedioPago"].ToString()
-                                     : "Sin pago";
+                // Limpiar imágenes
+                pbFotoEquipo1.Image = null;
+                pbFotoEquipo2.Image = null;
+                pbFotoEquipo3.Image = null;
 
-                txtModeloDet.Text = rd["Modelo"]?.ToString() ?? "";
-                txtDescripcionDet.Text = rd["Descripcion"]?.ToString() ?? "";
-                txtPresupuestoDet.Text = rd["Presupuesto"]?.ToString() ?? "";
+                // Mostrar hasta 3 imágenes
+                var pictureBoxes = new[] { pbFotoEquipo1, pbFotoEquipo2, pbFotoEquipo3 };
+                string carpeta = Path.Combine(Application.StartupPath, "FotosReparaciones");
 
-                int idActual = (int)rd["idEstado"];
-                cbNuevoEstado.SelectedValue = idActual;
+                for (int i = 0; i < Math.Min(rutasFotos.Count, pictureBoxes.Length); i++)
+                {
+                    string rutaCompleta = Path.Combine(carpeta, rutasFotos[i]);
+
+                    if (File.Exists(rutaCompleta))
+                    {
+                        pictureBoxes[i].Image = Image.FromFile(rutaCompleta);
+                        pictureBoxes[i].SizeMode = PictureBoxSizeMode.Zoom;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -120,6 +168,7 @@ WHERE r.idReparacion = @id;";
                 Close();
             }
         }
+
 
         private void btnGuardarDet_Click(object sender, EventArgs e)
         {

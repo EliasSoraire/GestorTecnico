@@ -11,7 +11,7 @@ namespace Gestor_Tecnico
 
         public ConexionSQL()
         {
-            cadenaConexion = "Server=(localdb)\\MSSQLLocalDB;Database=Gestor_Tecnico;Trusted_Connection=True;";
+            cadenaConexion = "Server=GASTON-LENOVO;Database=Gestor_Tecnico;Trusted_Connection=True;";
         }
 
         public SqlConnection ObtenerConexion()

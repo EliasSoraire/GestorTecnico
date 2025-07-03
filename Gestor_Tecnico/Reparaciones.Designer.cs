@@ -17,9 +17,9 @@
 
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             label1 = new Label();
             btnGenerarPDF = new Button();
             btnGuardarReparacion = new Button();
@@ -91,6 +91,7 @@
             btnGenerarPDF.TabIndex = 41;
             btnGenerarPDF.Text = "📄 Generar PDF";
             btnGenerarPDF.UseVisualStyleBackColor = false;
+            btnGenerarPDF.Click += btnGenerarPDF_Click;
             // 
             // btnGuardarReparacion
             // 
@@ -241,29 +242,29 @@
             // dgvReparaciones
             // 
             dgvReparaciones.AllowUserToAddRows = false;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(248, 249, 250);
-            dgvReparaciones.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(248, 249, 250);
+            dgvReparaciones.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvReparaciones.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvReparaciones.BackgroundColor = Color.White;
             dgvReparaciones.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(47, 54, 64);
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle5.ForeColor = Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(47, 54, 64);
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dgvReparaciones.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(47, 54, 64);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(47, 54, 64);
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvReparaciones.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvReparaciones.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvReparaciones.Columns.AddRange(new DataGridViewColumn[] { colIdReparacion, colEstado, colNombre, colTipo, colModelo, colFechaIngreso, colFechaEntrega, colAcciones });
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.White;
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle6.ForeColor = Color.FromArgb(47, 54, 64);
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(225, 239, 254);
-            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(47, 54, 64);
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            dgvReparaciones.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(47, 54, 64);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(225, 239, 254);
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(47, 54, 64);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvReparaciones.DefaultCellStyle = dataGridViewCellStyle3;
             dgvReparaciones.EnableHeadersVisualStyles = false;
             dgvReparaciones.GridColor = Color.FromArgb(225, 232, 240);
             dgvReparaciones.Location = new Point(25, 95);
@@ -424,9 +425,9 @@
             btnImagen.FlatStyle = FlatStyle.Flat;
             btnImagen.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnImagen.ForeColor = Color.White;
-            btnImagen.Location = new Point(25, 280);
+            btnImagen.Location = new Point(28, 275);
             btnImagen.Name = "btnImagen";
-            btnImagen.Size = new Size(360, 35);
+            btnImagen.Size = new Size(360, 40);
             btnImagen.TabIndex = 53;
             btnImagen.Text = "📷 Seleccionar Imagen";
             btnImagen.UseVisualStyleBackColor = false;
